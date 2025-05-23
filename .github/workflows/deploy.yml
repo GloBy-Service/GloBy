@@ -5,7 +5,7 @@ on:
     branches: [ prod, dev ]
 
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository }}/globy-frontend:${{ github.ref_name }}-${{ github.run_number }}
+  IMAGE_NAME: ghcr.io/therzarzayev/globy/globy-frontend:${{ github.ref_name }}-${{ github.run_number }}
 
 jobs:
   build-and-deploy:
