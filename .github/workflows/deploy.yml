@@ -1,50 +1,104 @@
-name: Deploy to K8s
+name: Frontend CI/CD
 
 on:
   push:
-    branches: [ prod, dev ]
+    branches:
+      - prod
 
 env:
-  IMAGE_NAME: ghcr.io/therzarzayev/globy/globy-frontend:${{ github.ref_name }}-${{ github.run_number }}
+  REGISTRY: docker.io
+  IMAGE_NAME: therzarzayev/globy-frontend:${{ github.ref_name }}-${{ github.run_number }}
+  GKE_CLUSTER: globy-cluster
+  GKE_ZONE: us-central1-c
+  GCP_PROJECT: possible-dream-460619-t4
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout source code
+        uses: actions/checkout@v3
 
-    - name: Set up Docker
-      uses: docker/setup-buildx-action@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
 
-    - name: Log in to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Build and Push Docker image
-      run: |
-        docker build -t $IMAGE_NAME .
-        docker push $IMAGE_NAME
+      - name: Build React app
+        run: npm run build
 
-    - name: Set K8s Env Vars
-      run: |
-        echo "K8S_NAMESPACE=$( [[ '${{ github.ref_name }}' == 'main' ]] && echo 'globy-prod' || echo 'globy-dev' )" >> $GITHUB_ENV
-        echo "FRONTEND_IMAGE=$IMAGE_NAME:${{ github.ref_name }}" >> $GITHUB_ENV
-        echo "K8S_INGRESS_HOST=$( [[ '${{ github.ref_name }}' == 'main' ]] && echo 'globy.space' || echo 'dev.globy.space' )" >> $GITHUB_ENV
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: react-build
+          path: build/
 
-    - name: Set up kubectl
-      uses: azure/setup-kubectl@v3
-      with:
-        version: 'latest'
+  docker:
+    needs: build
+    runs-on: ubuntu-latest
 
-    - name: Configure Kubeconfig
-      run: echo "${{ secrets.KUBECONFIG }}" | base64 -d > $HOME/.kube/config
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
 
-    - name: Deploy to Kubernetes
-      run: |
-        envsubst < deploy/k8s.template.yaml > deploy/k8s.yaml
-        kubectl apply -f deploy/k8s.yaml
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: react-build
+          path: build/
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ env.IMAGE_NAME }}
+
+  deploy:
+    needs: docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Set up gcloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Configure gcloud and get GKE credentials
+        run: |
+          gcloud config set project $GCP_PROJECT
+          gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
+
+      - name: Set ingress host based on branch
+        run: |
+          if [[ "${{ github.ref_name }}" == "dev" ]]; then
+            echo "K8S_INGRESS_HOST=${{ secrets.DEV_INGRESS_HOST }}" >> $GITHUB_ENV
+          elif [[ "${{ github.ref_name }}" == "prod" ]]; then
+            echo "K8S_INGRESS_HOST=${{ secrets.PROD_INGRESS_HOST }}" >> $GITHUB_ENV
+          else
+            echo "Unsupported branch"; exit 1
+          fi
+
+      - name: Deploy to GKE
+        run: |
+          envsubst < deploy/k8s.yaml > k8s-temp.yaml
+          kubectl apply -f k8s-temp.yaml
+        env:
+          K8S_NAMESPACE: globy-${{ github.ref_name }}
