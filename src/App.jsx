@@ -1,8 +1,13 @@
+import { LanguageProvider } from "./common/i18n/languageContext";
+import AppRoutes from "./common/routes";
 import "./common/style/root.css";
+
 const App = () => {
   return (
-    <div></div>
-  )
-}
+    <LanguageProvider>
+      <AppRoutes />
+    </LanguageProvider>
+  );
+};
 
-export default App
+export default App;
