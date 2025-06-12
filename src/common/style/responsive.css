@@ -1,9 +1,33 @@
 @media screen and (max-width: 767px) {
-    @import url('./mobile/text.txt');
+
+        .Plane-Animation {
+  position: fixed;
+  top: 100%;
+  left: -50% !important;
+  width: 200% !important;
+  height: auto;
+  z-index: 9999;
+
+}
+
+
 }
 
 @media screen and (min-width: 767px) and (max-width: 1024px) {
-    @import url('./tablet/text.txt');
+
+
+    .Plane-Animation {
+  position: fixed;
+  top: 100%;
+  left: -50% !important;
+  width: 200% !important;
+  height: auto;
+  z-index: 9999;
+
+}
+
+
+
 }
 
 @media screen and (min-width: 1024px) {

@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaInstagram, FaFacebookF, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
 import { FiPhoneCall } from 'react-icons/fi';
+import { IoChevronUpCircle, IoChevronUpCircleOutline } from 'react-icons/io5';
+
 import Logo from '../../../assets/image/logo.png';
+import PlaneImg from '../../../assets/image/plane.png';
 import '../../../common/style/root.css';
 
 const Footer = () => {
+  const [showPlane, setShowPlane] = useState(false);
+
+const handleScrollTop = () => {
+  setShowPlane(true); 
+
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  }, 1000);
+
+  setTimeout(() => {
+    setShowPlane(false);
+  }, 3000);
+};
+
+
   return (
     <div className="Footer-Group">
       <div className="Footer">
@@ -18,17 +36,8 @@ const Footer = () => {
             <h4>Quick Links</h4>
             <Link to="/visas">Visas</Link>
             <Link to="/about-us">About Us</Link>
-            {/* <Link to="/news">News</Link> */}
             <Link to="/countries">Countries</Link>
           </div>
-
-          {/* <div className="Footer-Section">
-            <h4>Visa Types</h4>
-            <Link to="/student-visa">Student Visa</Link>
-            <Link to="/tourist-visa">Tourist Visa</Link>
-            <Link to="/worker-visa">Worker Visa</Link>
-            <Link to="/immigration-visa">Immigration Visa</Link>
-          </div> */}
 
           <div className="Footer-Section">
             <h4>Countries</h4>
@@ -38,9 +47,15 @@ const Footer = () => {
             <Link to="/countries/asia">Asia</Link>
           </div>
 
-          <div className="Footer-Call">
-            <FiPhoneCall size={28} />
-            <span>*2323</span>
+          <div className="Footer-Items">
+            <div className="Footer-Call">
+              <FiPhoneCall size={28} />
+              <span>*2323</span>
+            </div>
+            <div className="Footer-Up" onClick={handleScrollTop}>
+              <IoChevronUpCircleOutline />
+              <IoChevronUpCircle />
+            </div>
           </div>
         </div>
 
@@ -56,6 +71,10 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
+      {showPlane && (
+        <img src={PlaneImg} className="Plane-Animation" />
+      )}
     </div>
   );
 };

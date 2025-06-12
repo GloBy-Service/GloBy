@@ -49,8 +49,9 @@
   font-weight: 500;
   cursor: pointer;
   gap: 3rem;
-    position: relative;
+  position: relative;
 }
+
 .Navbar-Items a {
   color: var(--primary-color);
   font-size: 18px;
@@ -64,7 +65,7 @@
   content: "";
   position: absolute;
   left: 0;
-  bottom: -6px; 
+  bottom: -6px;
   width: 100%;
   height: 2px;
   background-color: var(--primary-color);
@@ -74,13 +75,13 @@
 }
 
 .Navbar-Items a:hover::after {
-  transform: scaleX(1); 
+  transform: scaleX(1);
 }
 
 .Button-Lan {
   border: none;
   background-color: transparent;
-color: var(--primary-color);
+  color: var(--primary-color);
   font-size: 15px;
   cursor: pointer;
   position: relative;
@@ -96,9 +97,9 @@ color: var(--primary-color);
 .Footer {
   padding: 2rem 2rem 1.5rem 2rem;
   background-image: url('../../assets//image/footer.png');
-  background-repeat: no-repeat;     
-  background-size: cover;          
-  background-position: center;     
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 
@@ -122,6 +123,14 @@ color: var(--primary-color);
   gap: 8px;
 }
 
+.Footer-Items {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: space-between;
+  /* gap: 1.5rem; */
+}
+
 .Footer-Section h4 {
   margin-bottom: 10px;
   font-size: 1.1rem;
@@ -140,10 +149,30 @@ color: var(--primary-color);
 
 .Footer-Call {
   display: flex;
+
   /* align-items: center; */
   gap: 10px;
   font-size: 1.2rem;
 }
+
+.Footer-Up {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.Footer-Up svg:nth-child(2) {
+  display: none;
+}
+
+.Footer-Up:hover svg:nth-child(1) {
+  display: none;
+}
+
+.Footer-Up:hover svg:nth-child(2) {
+  display: inline;
+}
+
+
 
 .Footer-Bottom {
   display: flex;
@@ -160,3 +189,35 @@ color: var(--primary-color);
   gap: 15px;
   font-size: 1.2rem;
 }
+
+
+
+.Plane-Animation {
+  position: fixed;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 9999;
+  animation: flyUp 4s ease-in-out forwards;
+  -webkit-animation: flyUp 4s ease-in-out forwards;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+}
+
+
+@keyframes flyUp {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-400%);
+    -webkit-transform: translateY(-400%);
+    -moz-transform: translateY(-400%);
+    -ms-transform: translateY(-400%);
+    -o-transform: translateY(-400%);
+}
+}
+
+

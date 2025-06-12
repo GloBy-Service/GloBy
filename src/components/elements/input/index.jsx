@@ -2,6 +2,7 @@ import React from 'react';
 import '../../../common/style/root.css';
 import WomanImg from '../../../assets/image/woman.png';
 
+
 const Input = () => {
   return (
     <div className="Input-Group">
@@ -15,16 +16,17 @@ const Input = () => {
             <button className="Input-Button">
               Share <span className="arrow">→</span>
             </button>
-            <label className="Input-Checkbox">
+            {/* <label className="Input-Checkbox">
               <input type="checkbox" />
               <span>I may be contacted about this feedback. <a href="#">Read Privacy Policy</a>.</span>
-            </label>
+            </label> */}
           </div>
         </div>
         <div className="Input-Right">
-          <img src={WomanImg} alt="Happy Woman" />
+          <img src={WomanImg} />
         </div>
       </div>
+
     </div>
   );
 };
