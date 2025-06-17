@@ -1,25 +1,15 @@
-import videoBg from '../../../assets/video/Canada.mp4'
 import '../../../common/style/country.css'
+import CanadaHeader from '../../elements/canada'
+import Comments from '../../elements/comments'
+import Upload from '../../elements/upload'
 
 const Canada = () => {
   return (
-    <section className="country">
-    <video
-      className="country-video"
-      src={videoBg}
-      autoPlay
-      loop
-      muted
-      playsInline
-    />
-    <div className="country-content">
-      <h1>Canada</h1>
-      <p>
-        Easily verify and analyze U.S. bank statements with speed, accuracy,
-        and confidence.
-      </p>
+    <div className="Country-Group">
+      <CanadaHeader />
+      <Upload />
+      <Comments />
     </div>
-  </section>
   )
 }
 
