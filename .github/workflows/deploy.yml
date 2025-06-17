@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - prod
-
+      - dev
 env:
   REGISTRY: docker.io
   IMAGE_NAME: therzarzayev/globy-frontend:${{ github.ref_name }}-${{ github.run_number }}
