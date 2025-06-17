@@ -366,6 +366,7 @@ const Upload = () => {
 
   return (
     <div className="upload-container">
+      <h2 className="upload-title">Document Scan</h2>
       <div className={`upload-box ${status}`}>
         {status === 'uploading' || status === 'success' || status === 'error' ? (
           <>

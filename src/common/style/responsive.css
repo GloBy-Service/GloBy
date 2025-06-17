@@ -27,6 +27,7 @@
   }
   .country {
     padding: 2rem !important;
+    min-height: 60vh !important;
   }
 
   .Input-Right img {
