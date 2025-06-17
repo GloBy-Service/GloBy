@@ -42,6 +42,8 @@ kind: Ingress
 metadata:
   name: globy-frontend-ingress
   namespace: ${K8S_NAMESPACE}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: "nginx"
   rules:
@@ -49,7 +51,7 @@ spec:
     http:
       paths:
       - path: /
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: frontend-service
