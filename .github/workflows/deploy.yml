@@ -97,7 +97,8 @@ jobs:
           else
             echo "Unsupported branch"; exit 1
           fi
-  
+        shell: bash
+
       - name: Deploy to GKE
         run: |
           envsubst < deploy/k8s.yaml > k8s-temp.yaml
