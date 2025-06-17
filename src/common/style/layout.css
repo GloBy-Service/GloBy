@@ -1,19 +1,65 @@
+.Navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background: var(--background-color);
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.Navbar-Logo {
+  height: 40px;
+}
+
+.Navbar-Items {
+  display: flex;
+  gap: 2rem;
+  font-weight: 500;
+  align-items: center;
+}
+
+.Navbar-Items span {
+  cursor: pointer;
+  color: var(--primary-color);
+  position: relative;
+}
+
+.Navbar-Items span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary-color);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.Navbar-Items span:hover::after {
+  transform: scaleX(1);
+}
+
+.Navbar-Right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .Navbar-Lan {
   position: relative;
-  /* border: 2px solid var(--primary-color); */
-  background-color: var(--white-color);
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
-  padding: 0.5rem 1rem;
 }
 
 .language-popup {
   position: absolute;
   right: 0;
-  top: 100%;
+  top: 120%;
   background-color: var(--white-color);
   border: 1px solid #ccc;
   padding: 8px;
@@ -23,59 +69,12 @@
 }
 
 .language-popup div {
-  padding: 5px 10px;
+  padding: 6px 12px;
   cursor: pointer;
 }
 
 .language-popup div:hover {
-  background-color: var(--white-color);
-}
-
-.Navbar {
-  /* background-color: red; */
-  position: fixed;
-  height: 6rem;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  z-index: 9;
-  background: var(--background-color);
-  justify-content: space-between;
-  padding-inline: 2rem;
-}
-
-.Navbar-Items {
-  display: flex;
-  font-weight: 500;
-  cursor: pointer;
-  gap: 3rem;
-  position: relative;
-}
-
-.Navbar-Items a {
-  color: var(--primary-color);
-  font-size: 18px;
-  text-decoration: none;
-  position: relative;
-  display: inline-block;
-  letter-spacing: 0;
-}
-
-.Navbar-Items a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 100%;
-  height: 2px;
-  background-color: var(--primary-color);
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.3s ease;
-}
-
-.Navbar-Items a:hover::after {
-  transform: scaleX(1);
+  background-color: #f1f1f1;
 }
 
 .Button-Lan {
@@ -84,9 +83,70 @@
   color: var(--primary-color);
   font-size: 15px;
   cursor: pointer;
-  position: relative;
 }
 
+.Navbar-Burger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+/* Responsive design */
+
+@media (max-width: 768px) {
+  .Navbar-Items {
+    position: absolute;
+    top: 6rem;
+    right: 0;
+    width: 100%;
+    background: var(--background-color);
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .Navbar-Items.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .Navbar-Lan.desktop {
+    display: none;
+  }
+
+  .Navbar-Lan.mobile {
+    display: block;
+  }
+
+  .Navbar-Burger {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) {
+  .Navbar-Items {
+    position: static;
+    flex-direction: row;
+    gap: 3rem;
+    background: none;
+    padding: 0;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .Navbar-Lan.mobile {
+    display: none;
+  }
+}
 
 .Footer-Group {
   background-color: #002366;
@@ -221,3 +281,18 @@
 }
 
 
+.Navbar-Logo {
+  height: 45px;
+}
+
+.Navbar-Items span {
+  font-size: 18px;
+}
+
+.Button-Lan {
+  font-size: 16px;
+}
+
+.language-popup div {
+  font-size: 16px;
+}

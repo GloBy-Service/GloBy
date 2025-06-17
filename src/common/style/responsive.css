@@ -1,35 +1,65 @@
 @media screen and (max-width: 767px) {
 
-        .Plane-Animation {
-  position: fixed;
-  top: 100%;
-  left: -50% !important;
-  width: 200% !important;
-  height: auto;
-  z-index: 9999;
+  .Plane-Animation {
+    position: fixed;
+    top: 100%;
+    left: -50% !important;
+    width: 200% !important;
+    height: auto;
+    z-index: 9999;
 
-}
+  }
 
+  .Numbers-Wrapper {
+    height: fit-content !important;
+  }
 
-}
+  .Info-Group {
+    padding: 1rem !important;
+  }
+
+  .Info-Text {
+    padding: 2rem 2rem 0rem 2rem !important;
+  }
+
+  .header-overlay p:nth-child(1) {
+    font-size: 2rem !important;
+  }
+  .country {
+    padding: 2rem !important;
+    min-height: 60vh !important;
+  }
+
+  .Input-Right img {
+    display: none;
+  }
+
+  .Input-Left textarea {
+    max-width: 100% !important;
+  }
+
+  /* .Footer-Logo img {
+    margin-right: 6rem;
+  }*/
+} 
 
 @media screen and (min-width: 767px) and (max-width: 1024px) {
 
 
-    .Plane-Animation {
-  position: fixed;
-  top: 100%;
-  left: -50% !important;
-  width: 200% !important;
-  height: auto;
-  z-index: 9999;
+  .Plane-Animation {
+    position: fixed;
+    top: 100%;
+    left: -50% !important;
+    width: 200% !important;
+    height: auto;
+    z-index: 9999;
 
-}
+  }
 
 
 
 }
 
 @media screen and (min-width: 1024px) {
-    @import url('./desktop/text.txt');
+  @import url('./desktop/text.txt');
 }

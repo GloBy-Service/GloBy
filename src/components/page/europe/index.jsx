@@ -1,25 +1,17 @@
-import videoBg from '../../../assets/video/Europe.mp4'
 import '../../../common/style/country.css'
+import Comments from '../../elements/comments'
+import EuropeHeader from '../../elements/europe'
+import FlagList from '../../elements/list'
+// import Upload from '../../elements/upload'
 
 const Europe = () => {
   return (
-    <section className="country">
-    <video
-      className="country-video"
-      src={videoBg}
-      autoPlay
-      loop
-      muted
-      playsInline
-    />
-    <div className="country-content">
-      <h1>Europe</h1>
-      <p>
-        Easily verify and analyze U.S. bank statements with speed, accuracy,
-        and confidence.
-      </p>
+    <div className="Country-Group">
+      <EuropeHeader />
+      {/* <Upload/> */}
+      <FlagList />
+      <Comments />
     </div>
-  </section>
   )
 }
 
