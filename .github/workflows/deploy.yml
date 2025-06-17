@@ -10,7 +10,7 @@ env:
   IMAGE_NAME: therzarzayev/globy-frontend:${{ github.ref_name }}-${{ github.run_number }}
   GKE_CLUSTER: globy-cluster
   GKE_ZONE: us-central1-c
-  GCP_PROJECT: possible-dream-460619-t4
+  PROJECT_ID: possible-dream-460619-t4
 
 jobs:
   build:
@@ -25,11 +25,10 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build React app
-        run: npm run build
+      - name: npm install, build and test
+        run: |
+          npm install
+          npm run build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -85,7 +84,7 @@ jobs:
   
       - name: Configure gcloud and get GKE credentials
         run: |
-          gcloud config set project $GCP_PROJECT
+          gcloud config set project $PROJECT_ID
           gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
   
       - name: Set ingress host based on branch
