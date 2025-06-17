@@ -84,7 +84,7 @@ jobs:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
   
       - name: Install envsubst
-        run: sudo apt-get update && sudo apt-get install -y gettext-base
+        run: apt-get update && sudo apt-get install -y gettext-base
   
       - name: Configure gcloud and get GKE credentials
         run: |
@@ -103,8 +103,12 @@ jobs:
           fi
   
       - name: Deploy to GKE
+        shell: bash
         run: |
-          envsubst < deploy/k8s.yaml > k8s-temp.yaml
+          sed -e "s|\${IMAGE_NAME}|${IMAGE_NAME}|g" \
+              -e "s|\${K8S_INGRESS_HOST}|${K8S_INGRESS_HOST}|g" \
+              -e "s|\${K8S_NAMESPACE}|${K8S_NAMESPACE}|g" \
+              deploy/k8s.yaml > k8s-temp.yaml
           kubectl apply -f k8s-temp.yaml
         env:
           K8S_NAMESPACE: globy-${{ github.ref_name }}
