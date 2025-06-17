@@ -10,8 +10,7 @@ export default defineConfig({
       '/api': {
         target: 'https://dev.globy.space',
         changeOrigin: true,
-        // rewrite silindi, çünki backend də /api prefiksini gözləyir
-        // rewrite: (path) => path.replace(/^\/api/, ''), 
+
       },
     },
   },

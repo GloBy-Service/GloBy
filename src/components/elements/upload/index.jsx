@@ -35,35 +35,38 @@ const Upload = () => {
 
     try {
       const apiBase = import.meta.env.VITE_API_URL;
-      console.log('API base URL:', apiBase); // Debug üçün
+      console.log('API base URL:', apiBase);
 
       if (!apiBase) throw new Error('API URL is not defined');
 
       const formData = new FormData();
       formData.append('file', f);
 
-      const res = await fetch(`/api/upload`, {
+      // Remove the proxy approach and always use the full URL
+      const apiUrl = `${apiBase}/upload`;
+
+      const res = await fetch(apiUrl, {
         method: 'POST',
         body: formData,
+        // Add credentials if needed
+        // credentials: 'include',
       });
 
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Upload failed');
+      }
 
       const json = await res.json();
 
-      if (res.ok) {
-        setStatus('success');
-        setReasons(json.criteria || []);
-      } else {
-        setStatus('error');
-        setReasons(json.errors || ['Upload failed']);
-      }
+      setStatus('success');
+      setReasons(json.criteria || []);
     } catch (error) {
       console.error('Upload error:', error);
       setStatus('error');
-      setReasons(['Network or server error']);
+      setReasons([error.message || 'Network or server error']);
     }
   };
-
 
   return (
     <div className="upload-container">
