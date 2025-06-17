@@ -50,8 +50,8 @@ spec:
   - host: ${K8S_INGRESS_HOST}
     http:
       paths:
-      - path: /(.*)
-        pathType: Prefix
+      - path: /
+        pathType: ImplementationSpecific
         backend:
           service:
             name: frontend-service
