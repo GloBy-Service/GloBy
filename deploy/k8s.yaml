@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: ${DOCKER_IMAGE}
+        image: ${IMAGE_NAME}
         ports:
         - containerPort: 80
       imagePullSecrets:
