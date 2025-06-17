@@ -83,9 +83,6 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
   
-      - name: Install envsubst
-        run: apt-get update && sudo apt-get install -y gettext-base
-  
       - name: Configure gcloud and get GKE credentials
         run: |
           gcloud config set project $GCP_PROJECT
