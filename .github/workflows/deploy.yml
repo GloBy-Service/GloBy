@@ -71,21 +71,25 @@ jobs:
   deploy:
     needs: docker
     runs-on: ubuntu-latest
-
+  
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
-
+  
       - name: Set up gcloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-
+  
+      - name: Install gke-gcloud-auth-plugin
+        run: |
+          gcloud components install gke-gcloud-auth-plugin
+  
       - name: Configure gcloud and get GKE credentials
         run: |
           gcloud config set project $GCP_PROJECT
           gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
-
+  
       - name: Set ingress host based on branch
         run: |
           if [[ "${{ github.ref_name }}" == "dev" ]]; then
@@ -95,7 +99,7 @@ jobs:
           else
             echo "Unsupported branch"; exit 1
           fi
-
+  
       - name: Deploy to GKE
         run: |
           envsubst < deploy/k8s.yaml > k8s-temp.yaml
