@@ -34,14 +34,19 @@ const Upload = () => {
     setStatus('uploading');
 
     try {
-      const apiBase = process.env.REACT_APP_API_URL; // <- env-dən oxunur
+      const apiBase = import.meta.env.VITE_API_URL;
+      console.log('API base URL:', apiBase); // Debug üçün
+
+      if (!apiBase) throw new Error('API URL is not defined');
+
       const formData = new FormData();
       formData.append('file', f);
 
-      const res = await fetch(`${apiBase}/upload`, {
+      const res = await fetch(`/api/upload`, {
         method: 'POST',
         body: formData,
       });
+
 
       const json = await res.json();
 
@@ -53,10 +58,12 @@ const Upload = () => {
         setReasons(json.errors || ['Upload failed']);
       }
     } catch (error) {
+      console.error('Upload error:', error);
       setStatus('error');
       setReasons(['Network or server error']);
     }
   };
+
 
   return (
     <div className="upload-container">
@@ -71,8 +78,8 @@ const Upload = () => {
               {status === 'success'
                 ? 'Upload Successful !'
                 : status === 'uploading'
-                ? 'Uploading...'
-                : 'Upload failed! Please try again.'}
+                  ? 'Uploading...'
+                  : 'Upload failed! Please try again.'}
             </span>
             <span className="percent-text">
               {status === 'success' ? (
@@ -95,7 +102,13 @@ const Upload = () => {
             <button onClick={pickFile}>Browse Files</button>
           </>
         )}
-        <input type="file" accept=".pdf" ref={ref} onChange={onChange} style={{ display: 'none' }} />
+        <input
+          type="file"
+          accept=".pdf"
+          ref={ref}
+          onChange={onChange}
+          style={{ display: 'none' }}
+        />
       </div>
 
       {reasons.length > 0 && (
