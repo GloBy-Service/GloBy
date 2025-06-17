@@ -72,7 +72,7 @@ jobs:
     needs: docker
     runs-on: ubuntu-latest
     container:
-      image: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+      image: google/cloud-sdk:latest
   
     steps:
       - name: Checkout source code
