@@ -83,12 +83,16 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
   
+      - name: Install envsubst
+        run: sudo apt-get update && sudo apt-get install -y gettext-base
+  
       - name: Configure gcloud and get GKE credentials
         run: |
           gcloud config set project $GCP_PROJECT
           gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
   
       - name: Set ingress host based on branch
+        shell: bash
         run: |
           if [[ "${{ github.ref_name }}" == "dev" ]]; then
             echo "K8S_INGRESS_HOST=${{ secrets.DEV_INGRESS_HOST }}" >> $GITHUB_ENV
@@ -97,8 +101,7 @@ jobs:
           else
             echo "Unsupported branch"; exit 1
           fi
-        shell: bash
-
+  
       - name: Deploy to GKE
         run: |
           envsubst < deploy/k8s.yaml > k8s-temp.yaml
