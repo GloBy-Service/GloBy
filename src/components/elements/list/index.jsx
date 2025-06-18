@@ -2,19 +2,69 @@ import React, { useState } from 'react';
 import Upload from '../upload';
 import './../../../common/style/country.css';
 
+// const countries = [
+//   { name: 'Albania', code: 'al' }, { name: 'Andorra', code: 'ad' }, { name: 'Austria', code: 'at' }, { name: 'Azerbaijan', code: 'az' },
+//   { name: 'Belgium', code: 'be' }, { name: 'Bosnia and Herzegovina', code: 'ba' }, { name: 'Bulgaria', code: 'bg' }, { name: 'Croatia', code: 'hr' },
+//   { name: 'Cyprus', code: 'cy' }, { name: 'Czechia', code: 'cz' }, { name: 'Denmark', code: 'dk' }, { name: 'Estonia', code: 'ee' },
+//   { name: 'Finland', code: 'fi' }, { name: 'France', code: 'fr' }, { name: 'Georgia', code: 'ge' }, { name: 'Germany', code: 'de' },
+//   { name: 'Greece', code: 'gr' }, { name: 'Hungary', code: 'hu' }, { name: 'Iceland', code: 'is' }, { name: 'Ireland', code: 'ie' },
+//   { name: 'Italy', code: 'it' }, { name: 'Kosovo', code: 'xk' }, { name: 'Latvia', code: 'lv' }, { name: 'Liechtenstein', code: 'li' },
+//   { name: 'Lithuania', code: 'lt' }, { name: 'Luxembourg', code: 'lu' }, { name: 'Malta', code: 'mt' }, { name: 'Moldova', code: 'md' },
+//   { name: 'Monaco', code: 'mc' }, { name: 'Montenegro', code: 'me' }, { name: 'Netherlands', code: 'nl' }, { name: 'North Macedonia', code: 'mk' },
+//   { name: 'Norway', code: 'no' }, { name: 'Poland', code: 'pl' }, { name: 'Portugal', code: 'pt' }, { name: 'Romania', code: 'ro' },
+//   { name: 'San Marino', code: 'sm' }, { name: 'Serbia', code: 'rs' }, { name: 'Slovakia', code: 'sk' }, { name: 'Slovenia', code: 'si' },
+//   { name: 'Spain', code: 'es' }, { name: 'Sweden', code: 'se' }, { name: 'Switzerland', code: 'ch' }, { name: 'Turkey', code: 'tr' },
+//   { name: 'Ukraine', code: 'ua' }, { name: 'United Kingdom', code: 'gb' }, { name: 'Vatican', code: 'va' },
+// ];
+
 const countries = [
-  { name: 'Albania', code: 'al' }, { name: 'Andorra', code: 'ad' }, { name: 'Austria', code: 'at' }, { name: 'Azerbaijan', code: 'az' },
-  { name: 'Belgium', code: 'be' }, { name: 'Bosnia and Herzegovina', code: 'ba' }, { name: 'Bulgaria', code: 'bg' }, { name: 'Croatia', code: 'hr' },
-  { name: 'Cyprus', code: 'cy' }, { name: 'Czechia', code: 'cz' }, { name: 'Denmark', code: 'dk' }, { name: 'Estonia', code: 'ee' },
-  { name: 'Finland', code: 'fi' }, { name: 'France', code: 'fr' }, { name: 'Georgia', code: 'ge' }, { name: 'Germany', code: 'de' },
-  { name: 'Greece', code: 'gr' }, { name: 'Hungary', code: 'hu' }, { name: 'Iceland', code: 'is' }, { name: 'Ireland', code: 'ie' },
-  { name: 'Italy', code: 'it' }, { name: 'Kosovo', code: 'xk' }, { name: 'Latvia', code: 'lv' }, { name: 'Liechtenstein', code: 'li' },
-  { name: 'Lithuania', code: 'lt' }, { name: 'Luxembourg', code: 'lu' }, { name: 'Malta', code: 'mt' }, { name: 'Moldova', code: 'md' },
-  { name: 'Monaco', code: 'mc' }, { name: 'Montenegro', code: 'me' }, { name: 'Netherlands', code: 'nl' }, { name: 'North Macedonia', code: 'mk' },
-  { name: 'Norway', code: 'no' }, { name: 'Poland', code: 'pl' }, { name: 'Portugal', code: 'pt' }, { name: 'Romania', code: 'ro' },
-  { name: 'San Marino', code: 'sm' }, { name: 'Serbia', code: 'rs' }, { name: 'Slovakia', code: 'sk' }, { name: 'Slovenia', code: 'si' },
-  { name: 'Spain', code: 'es' }, { name: 'Sweden', code: 'se' }, { name: 'Switzerland', code: 'ch' }, { name: 'Turkey', code: 'tr' },
-  { name: 'Ukraine', code: 'ua' }, { name: 'United Kingdom', code: 'gb' }, { name: 'Vatican', code: 'va' },
+  { name: 'Albania', backendName: 'Albaniya', code: 'al' },
+  { name: 'Andorra', backendName: 'Andorra', code: 'ad' },
+  { name: 'Austria', backendName: 'Avstriya', code: 'at' },
+  { name: 'Azerbaijan', backendName: 'Azərbaycan', code: 'az' },
+  { name: 'Belgium', backendName: 'Belçika', code: 'be' },
+  { name: 'Bosnia and Herzegovina', backendName: 'Bosniya və Herseqovina', code: 'ba' },
+  { name: 'Bulgaria', backendName: 'Bolqarıstan', code: 'bg' },
+  { name: 'Croatia', backendName: 'Xorvatiya', code: 'hr' },
+  { name: 'Cyprus', backendName: 'Kipr', code: 'cy' },
+  { name: 'Czechia', backendName: 'Çexiya', code: 'cz' },
+  { name: 'Denmark', backendName: 'Danimarka', code: 'dk' },
+  { name: 'Estonia', backendName: 'Estoniya', code: 'ee' },
+  { name: 'Finland', backendName: 'Finlandiya', code: 'fi' },
+  { name: 'France', backendName: 'Fransa', code: 'fr' },
+  { name: 'Georgia', backendName: 'Gürcüstan', code: 'ge' },
+  { name: 'Germany', backendName: 'Almaniya', code: 'de' },
+  { name: 'Greece', backendName: 'Yunanıstan', code: 'gr' },
+  { name: 'Hungary', backendName: 'Macarıstan', code: 'hu' },
+  { name: 'Iceland', backendName: 'İslandiya', code: 'is' },
+  { name: 'Ireland', backendName: 'İrlandiya', code: 'ie' },
+  { name: 'Italy', backendName: 'İtaliya', code: 'it' },
+  { name: 'Kosovo', backendName: 'Kosovo', code: 'xk' },
+  { name: 'Latvia', backendName: 'Latviya', code: 'lv' },
+  { name: 'Liechtenstein', backendName: 'Lixtenşteyn', code: 'li' },
+  { name: 'Lithuania', backendName: 'Litva', code: 'lt' },
+  { name: 'Luxembourg', backendName: 'Lüksemburq', code: 'lu' },
+  { name: 'Malta', backendName: 'Malta', code: 'mt' },
+  { name: 'Moldova', backendName: 'Moldova', code: 'md' },
+  { name: 'Monaco', backendName: 'Monako', code: 'mc' },
+  { name: 'Montenegro', backendName: 'Monteneqro', code: 'me' },
+  { name: 'Netherlands', backendName: 'Niderland', code: 'nl' },
+  { name: 'North Macedonia', backendName: 'Şimali Makedoniya', code: 'mk' },
+  { name: 'Norway', backendName: 'Norveç', code: 'no' },
+  { name: 'Poland', backendName: 'Polşa', code: 'pl' },
+  { name: 'Portugal', backendName: 'Portuqaliya', code: 'pt' },
+  { name: 'Romania', backendName: 'Rumıniya', code: 'ro' },
+  { name: 'San Marino', backendName: 'San Marino', code: 'sm' },
+  { name: 'Serbia', backendName: 'Serbiya', code: 'rs' },
+  { name: 'Slovakia', backendName: 'Slovakiya', code: 'sk' },
+  { name: 'Slovenia', backendName: 'Sloveniya', code: 'si' },
+  { name: 'Spain', backendName: 'İspaniya', code: 'es' },
+  { name: 'Sweden', backendName: 'İsveç', code: 'se' },
+  { name: 'Switzerland', backendName: 'İsveçrə', code: 'ch' },
+  { name: 'Turkey', backendName: 'Türkiyə', code: 'tr' },
+  { name: 'Ukraine', backendName: 'Ukrayna', code: 'ua' },
+  { name: 'United Kingdom', backendName: 'Birləşmiş Krallıq', code: 'gb' },
+  { name: 'Vatican', backendName: 'Vatikan', code: 'va' },
 ];
 
 const FlagList = () => {
@@ -171,7 +221,12 @@ const FlagList = () => {
         </div>
       )}
 
-      {showUpload && <Upload />}
+      {showUpload && (
+        <Upload
+          country={selected.backendName}
+          stayDays={selected.customDays || selected.duration}
+        />
+      )}
     </>
   );
 };

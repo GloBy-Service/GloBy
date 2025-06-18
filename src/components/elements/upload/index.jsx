@@ -4,15 +4,17 @@ import { FiCheckCircle, FiXCircle } from 'react-icons/fi';
 import { MdDelete } from 'react-icons/md';
 import '../../../common/style/country.css';
 
-const Upload = () => {
+const Upload = ( {country, stayDays }) => {
   const ref = useRef(null);
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState('idle');
   const [reasons, setReasons] = useState([]);
+  // const [country, setCountry] = useState('');
+  // const [stayDays, setStayDays] = useState('');
 
   const pickFile = () => ref.current.click();
 
-  const onChange = async (e) => {
+   const onChange = async (e) => {
     const f = e.target.files[0];
     setFile(null);
     setStatus('idle');
@@ -35,21 +37,18 @@ const Upload = () => {
 
     try {
       const apiBase = import.meta.env.VITE_API_URL;
-      console.log('API base URL:', apiBase);
-
-      if (!apiBase) throw new Error('API URL is not defined');
-
       const formData = new FormData();
       formData.append('file', f);
+      formData.append('country', country);
+      formData.append('stayDays', stayDays);
 
-      // Remove the proxy approach and always use the full URL
-      const apiUrl = `${apiBase}/upload`;
+      for (const pair of formData.entries()) {
+        console.log(`${pair[0]}:`, pair[1]);
+      }
 
-      const res = await fetch(apiUrl, {
+      const res = await fetch(`${apiBase}/statements/evaluate/pdf`, {
         method: 'POST',
         body: formData,
-        // Add credentials if needed
-        // credentials: 'include',
       });
 
       if (!res.ok) {
@@ -58,9 +57,8 @@ const Upload = () => {
       }
 
       const json = await res.json();
-
       setStatus('success');
-      setReasons(json.criteria || []);
+      setReasons([json.message]);
     } catch (error) {
       console.error('Upload error:', error);
       setStatus('error');
