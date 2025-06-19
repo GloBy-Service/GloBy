@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FaInstagram, FaFacebookF, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
 import { FiPhoneCall } from 'react-icons/fi';
 import { IoChevronUpCircle, IoChevronUpCircleOutline } from 'react-icons/io5';
@@ -10,19 +10,35 @@ import '../../../common/style/root.css';
 
 const Footer = () => {
   const [showPlane, setShowPlane] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-const handleScrollTop = () => {
-  setShowPlane(true); 
+  const handleScrollTop = () => {
+    setShowPlane(true);
 
-  setTimeout(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' }); 
-  }, 1000);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 1000);
 
-  setTimeout(() => {
-    setShowPlane(false);
-  }, 3000);
-};
+    setTimeout(() => {
+      setShowPlane(false);
+    }, 3000);
+  };
 
+  const scrollToSection = (id) => {
+    if (location.pathname !== '/') {
+      navigate('/', { state: { scrollTo: id } });
+    } else {
+      const section = document.getElementById(id);
+      if (section) {
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        const sectionHeight = section.offsetHeight;
+        const viewportHeight = window.innerHeight;
+        const offset = sectionTop - (viewportHeight / 2) + (sectionHeight / 2);
+        window.scrollTo({ top: offset, behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
     <div className="Footer-Group">
@@ -34,17 +50,17 @@ const handleScrollTop = () => {
 
           <div className="Footer-Section">
             <h4>Quick Links</h4>
-            <Link to="/visas">Visas</Link>
-            <Link to="/about-us">About Us</Link>
-            <Link to="/countries">Countries</Link>
+            <span onClick={() => scrollToSection('info')}>About Us</span>
+            <span onClick={() => scrollToSection('countries')}>Countries</span>
+            <span onClick={() => scrollToSection('input')}>Contact</span>
           </div>
 
           <div className="Footer-Section">
             <h4>Countries</h4>
-            <Link to="/countries/us">United States</Link>
-            <Link to="/countries/canada">Canada</Link>
-            <Link to="/countries/europe">Europe</Link>
-            <Link to="/countries/asia">Asia</Link>
+            <Link to="/usa">United States</Link>
+            <Link to="/canada">Canada</Link>
+            <Link to="/europe">Europe</Link>
+            <Link to="/uk">United Kingdom</Link>
           </div>
 
           <div className="Footer-Items">
@@ -72,9 +88,7 @@ const handleScrollTop = () => {
         </div>
       </div>
 
-      {showPlane && (
-        <img src={PlaneImg} className="Plane-Animation" />
-      )}
+      {showPlane && <img src={PlaneImg} className="Plane-Animation" alt="Flying plane" />}
     </div>
   );
 };

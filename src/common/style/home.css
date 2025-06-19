@@ -329,6 +329,7 @@
   display: flex;
   gap: 1rem;
   animation: scroll-left 30s linear infinite;
+
 }
 
 .Comments-Marquee:hover .Comments-Track {
@@ -337,10 +338,14 @@
 
 .Comment-Card:hover {
       background: var(--white-color);
+
 }
 .Comment-Card {
   width: 300px;
-
+      display: flex;
+      flex-direction: column;
+        align-items: center;
+        justify-content: center;
   border: 1px solid #ccc;
   border-radius: 12px;
   padding: 1rem;

@@ -33,9 +33,9 @@ const Home = () => {
   return (
     <div>
       <div id="header"><Header /></div>
-      <div id="directions"><Directions /></div>
+      <div id="countries"><Directions /></div>
       <div id="info"><Info /></div>
-      <div id="countries"><Numbers /></div>
+      <div ><Numbers /></div>
       <Comments />
       <div id="input"><Input /></div>
     </div>
