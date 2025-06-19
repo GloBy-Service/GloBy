@@ -56,7 +56,19 @@
 
   }
 
+    .country {
+    padding: 2rem !important;
+    min-height: 60vh !important;
+  }
 
+.Directions {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+}
+
+.Flag-Item {
+  min-width: auto !important;
+}
 
 }
 

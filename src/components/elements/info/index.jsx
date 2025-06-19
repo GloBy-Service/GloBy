@@ -16,7 +16,7 @@ const Info = () => {
           <p className="Info-Description">
             Ensure your bank statement meets all the required standards for visa applications, financial verification, or official documentation. Our experts carefully examine your statements for completeness, consistency, and compliance — giving you peace of mind before submission.
           </p>
-          <a href="#" className="Info-Link">Learn more →</a>
+          {/* <a href="#" className="Info-Link">Learn more →</a> */}
         </div>
         <div className="Info-Image">
           <img src={infoImg} alt="Visa Application" className="Info-Image-File" />
