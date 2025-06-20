@@ -274,78 +274,6 @@ const countries = [
   // { name: 'Vatican', backendName: 'Vatikan', code: 'va' },
 ];
 
-// const FlagList = () => {
-//   const [selected, setSelected] = useState(null);
-//   const [showUpload, setShowUpload] = useState(false);
-//   const [dropdownOpen, setDropdownOpen] = useState(false);
-
-//   const handleCountrySelect = (country) => {
-//     setSelected(country);
-//     setDropdownOpen(false);
-//     setShowUpload(true); 
-//   };
-
-//   return (
-//     <>
-    
-//       {!showUpload && (
-//         <div className="FlagList">
-//           <h2 className="H2">Choose your country</h2>
-          
-//           <div className="country-dropdown">
-//             <div 
-//               className="dropdown-header" 
-//               onClick={() => setDropdownOpen(!dropdownOpen)}
-//             >
-//               {selected ? (
-//                 <div className="selected-option">
-//                   <img 
-//                     src={`https://flagcdn.com/w20/${selected.code}.png`} 
-//                     alt={selected.name} 
-//                     style={{ marginRight: '8px' }}
-//                   />
-//                   {selected.name}
-//                 </div>
-//               ) : (
-//                 <div className="placeholder">Select a country</div>
-//               )}
-//               <span className="dropdown-icon">
-//                 {dropdownOpen ? '▲' : '▼'}
-//               </span>
-//             </div>
-            
-//             {dropdownOpen && (
-//               <div className="dropdown-options">
-//                 {countries.map((country) => (
-//                   <div
-//                     key={country.name}
-//                     className={`dropdown-option ${selected?.name === country.name ? 'selected' : ''}`}
-//                     onClick={() => handleCountrySelect(country)}
-//                   >
-//                     <img 
-//                       src={`https://flagcdn.com/w20/${country.code}.png`} 
-//                       alt={country.name} 
-//                       style={{ marginRight: '8px' }}
-//                     />
-//                     {country.name}
-//                   </div>
-//                 ))}
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       )}
-
-//       {showUpload && selected && (
-//         <Upload
-//           country={selected.backendName}
-//           stayDays="30" 
-//         />
-//       )}
-//     </>
-//   );
-// };
-
 const FlagList = () => {
   const [selected, setSelected] = useState(null);
   const [showUpload, setShowUpload] = useState(false);
@@ -359,6 +287,7 @@ const FlagList = () => {
 
   return (
     <>
+    
       {!showUpload && (
         <div className="FlagList">
           <h2 className="H2">Choose your country</h2>
@@ -410,6 +339,7 @@ const FlagList = () => {
       {showUpload && selected && (
         <Upload
           country={selected.backendName}
+          stayDays="30" 
         />
       )}
     </>
