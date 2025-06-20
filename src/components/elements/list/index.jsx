@@ -237,9 +237,9 @@ const countries = [
   { name: 'Norway', backendName: 'Norveç', code: 'no' },
   { name: 'Poland', backendName: 'Polşa', code: 'pl' },
 
-  { name: 'USA', backendName: 'Amerika Birləşmiş Ştatları', code: 'us', hidden: true },
-  { name: 'Canada', backendName: 'Kanada', code: 'ca', hidden: true },
-  { name: 'UK', backendName: 'Birləşmiş Krallıq', code: 'gb', hidden: true },
+  { name: 'USA', backendName: 'USA', code: 'us', hidden: true },
+  { name: 'Canada', backendName: 'Canada', code: 'ca', hidden: true },
+  { name: 'UK', backendName: 'UK', code: 'gb', hidden: true },
 
   // { name: 'Albania', backendName: 'Albaniya', code: 'al' },
   // { name: 'Andorra', backendName: 'Andorra', code: 'ad' },
