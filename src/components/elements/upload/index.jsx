@@ -170,14 +170,14 @@ const Upload = ({ country, stayDays }) => {
 
   const showNotification = (type, message) => {
     setNotification({ type, message });
-    setTimeout(() => setNotification(null), 3000);
+    setTimeout(() => setNotification(null), 6000);
   };
 
   const pickFile = () => {
     if (!privacyChecked) {
       setHighlight(true);
       showNotification('error', 'Please agree to the Privacy Policy');
-      setTimeout(() => setHighlight(false), 800);
+      setTimeout(() => setHighlight(false), 1000);
       return;
     }
     ref.current.click();

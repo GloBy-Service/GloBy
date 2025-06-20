@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import {  useNavigate, useLocation } from 'react-router-dom';
 import { FaInstagram, FaFacebookF, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
 import { FiPhoneCall } from 'react-icons/fi';
 import { IoChevronUpCircle, IoChevronUpCircleOutline } from 'react-icons/io5';
@@ -57,10 +57,10 @@ const Footer = () => {
 
           <div className="Footer-Section">
             <h4>Countries</h4>
-            <Link to="/usa">United States</Link>
-            <Link to="/canada">Canada</Link>
-            <Link to="/europe">Europe</Link>
-            <Link to="/uk">United Kingdom</Link>
+            <span onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => navigate('/usa'), 500); }}>United States</span>
+            <span onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => navigate('/canada'), 500); }}>Canada</span>
+            <span onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => navigate('/europe'), 500); }}>Europe</span>
+            <span onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => navigate('/uk'), 500); }}>United Kingdom</span>
           </div>
 
           <div className="Footer-Items">
