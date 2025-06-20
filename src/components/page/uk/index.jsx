@@ -1,14 +1,16 @@
 
 import '../../../common/style/country.css'
 import Comments from '../../elements/comments'
+import FlagListUk from '../../elements/listUk'
 import UkHeader from '../../elements/uk'
-import Upload from '../../elements/upload'
+// import Upload from '../../elements/upload'
 
 const Uk = () => {
   return (
     <div className="Country-Group">
       <UkHeader />
-      <Upload />
+      {/* <Upload /> */}
+      <FlagListUk />
       <Comments />
     </div>
   )

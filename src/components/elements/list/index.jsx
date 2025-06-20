@@ -235,9 +235,9 @@ const countries = [
   { name: 'Netherlands', backendName: 'Niderland', code: 'nl' },
   { name: 'Norway', backendName: 'Norveç', code: 'no' },
   { name: 'Poland', backendName: 'Polşa', code: 'pl' },
-  { name: 'USA', backendName: 'USA', code: 'us' },
-  { name: 'Canada', backendName: 'Canada', code: 'ca' },
-  { name: 'UK', backendName: 'UK', code: 'gb' },
+  // { name: 'USA', backendName: 'USA', code: 'us' },
+  // { name: 'Canada', backendName: 'Canada', code: 'ca' },
+  // { name: 'UK', backendName: 'UK', code: 'gb' },
 ];
 
 const FlagList = () => {

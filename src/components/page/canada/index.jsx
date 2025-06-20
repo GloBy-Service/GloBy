@@ -1,13 +1,15 @@
 import '../../../common/style/country.css'
 import CanadaHeader from '../../elements/canada'
 import Comments from '../../elements/comments'
-import Upload from '../../elements/upload'
+import FlagListCanada from '../../elements/listCanada'
+// import Upload from '../../elements/upload'
 
 const Canada = () => {
   return (
     <div className="Country-Group">
       <CanadaHeader />
-      <Upload />
+      {/* <Upload /> */}
+      <FlagListCanada />
       <Comments />
     </div>
   )
