@@ -339,7 +339,7 @@ const FlagList = () => {
       {showUpload && selected && (
         <Upload
           country={selected.backendName}
-          stayDays="30" 
+          // stayDays="30" 
         />
       )}
     </>
