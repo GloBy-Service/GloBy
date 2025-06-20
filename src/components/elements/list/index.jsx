@@ -218,53 +218,68 @@
 
 // export default FlagList;
 
-import React, { useEffect, useState } from 'react';
+
+
+import React, { useState } from 'react';
 import Upload from '../upload';
 import './../../../common/style/country.css';
-import { useLocation } from 'react-router';
 
 const countries = [
+  // { name: 'Albania', backendName: 'Albaniya', code: 'al' },
+  // { name: 'Andorra', backendName: 'Andorra', code: 'ad' },
   { name: 'Austria', backendName: 'Avstriya', code: 'at' },
+  // { name: 'Azerbaijan', backendName: 'Azərbaycan', code: 'az' },
   { name: 'Belgium', backendName: 'Belçika', code: 'be' },
+  // { name: 'Bosnia and Herzegovina', backendName: 'Bosniya və Herseqovina', code: 'ba' },
+  // { name: 'Bulgaria', backendName: 'Bolqarıstan', code: 'bg' },
+  // { name: 'Croatia', backendName: 'Xorvatiya', code: 'hr' },
+  // { name: 'Cyprus', backendName: 'Kipr', code: 'cy' },
   { name: 'Czechia', backendName: 'Çexiya', code: 'cz' },
+  // { name: 'Denmark', backendName: 'Danimarka', code: 'dk' },
+  // { name: 'Estonia', backendName: 'Estoniya', code: 'ee' },
+  // { name: 'Finland', backendName: 'Finlandiya', code: 'fi' },
   { name: 'France', backendName: 'Fransa', code: 'fr' },
+  // { name: 'Georgia', backendName: 'Gürcüstan', code: 'ge' },
   { name: 'Germany', backendName: 'Almaniya', code: 'de' },
+  // { name: 'Greece', backendName: 'Yunanıstan', code: 'gr' },
   { name: 'Hungary', backendName: 'Macarıstan', code: 'hu' },
+  // { name: 'Iceland', backendName: 'İslandiya', code: 'is' },
+  // { name: 'Ireland', backendName: 'İrlandiya', code: 'ie' },
   { name: 'Italy', backendName: 'İtaliya', code: 'it' },
+  // { name: 'Kosovo', backendName: 'Kosovo', code: 'xk' },
+  // { name: 'Latvia', backendName: 'Latviya', code: 'lv' },
+  // { name: 'Liechtenstein', backendName: 'Lixtenşteyn', code: 'li' },
+  // { name: 'Lithuania', backendName: 'Litva', code: 'lt' },
+  // { name: 'Luxembourg', backendName: 'Lüksemburq', code: 'lu' },
+  // { name: 'Malta', backendName: 'Malta', code: 'mt' },
+  // { name: 'Moldova', backendName: 'Moldova', code: 'md' },
+  // { name: 'Monaco', backendName: 'Monako', code: 'mc' },
+  // { name: 'Montenegro', backendName: 'Monteneqro', code: 'me' },
   { name: 'Netherlands', backendName: 'Niderland', code: 'nl' },
+  // { name: 'North Macedonia', backendName: 'Şimali Makedoniya', code: 'mk' },
   { name: 'Norway', backendName: 'Norveç', code: 'no' },
   { name: 'Poland', backendName: 'Polşa', code: 'pl' },
-
+  // { name: 'Portugal', backendName: 'Portuqaliya', code: 'pt' },
+  // { name: 'Romania', backendName: 'Rumıniya', code: 'ro' },
+  // { name: 'San Marino', backendName: 'San Marino', code: 'sm' },
+  // { name: 'Serbia', backendName: 'Serbiya', code: 'rs' },
+  // { name: 'Slovakia', backendName: 'Slovakiya', code: 'sk' },
+  // { name: 'Slovenia', backendName: 'Sloveniya', code: 'si' },
+  // { name: 'Spain', backendName: 'İspaniya', code: 'es' },
+  // { name: 'Sweden', backendName: 'İsveç', code: 'se' },
+  // { name: 'Switzerland', backendName: 'İsveçrə', code: 'ch' },
+  // { name: 'Turkey', backendName: 'Türkiyə', code: 'tr' },
+  // { name: 'Ukraine', backendName: 'Ukrayna', code: 'ua' },
   { name: 'USA', backendName: 'USA', code: 'us', hidden: true },
   { name: 'Canada', backendName: 'Canada', code: 'ca', hidden: true },
-  { name: 'UK', backendName: 'UK', code: 'gb', hidden: true },
+  { name: 'UK', backendName: 'UK', code: 'gb', hidden: true }
+  // { name: 'Vatican', backendName: 'Vatikan', code: 'va' },
 ];
 
 const FlagList = () => {
-  const location = useLocation();
   const [selected, setSelected] = useState(null);
   const [showUpload, setShowUpload] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  useEffect(() => {
-    const path = location.pathname.toLowerCase();
-    let country = null;
-
-    if (path.includes('/usa')) {
-      country = countries.find(c => c.name === 'USA');
-    } else if (path.includes('/uk')) {
-      country = countries.find(c => c.name === 'UK');
-    } else if (path.includes('/canada')) {
-      country = countries.find(c => c.name === 'Canada');
-    }
-
-    if (country) {
-      setSelected(country);
-      setShowUpload(true);
-    } else {
-      setShowUpload(false);
-    }
-  }, [location.pathname]);
 
   const handleCountrySelect = (country) => {
     setSelected(country);
@@ -272,37 +287,23 @@ const FlagList = () => {
     setShowUpload(true);
   };
 
-  const handleBackClick = () => {
-    setSelected(null);
-    setShowUpload(false);
-  };
-
   return (
     <>
-      {showUpload && selected ? (
-        <div>
-          <button onClick={handleBackClick} className="back-button">
-            ← Back to country selection
-          </button>
-          <Upload
-            country={selected.backendName}
-            stayDays="30" 
-          />
-        </div>
-      ) : (
+
+      {!showUpload && (
         <div className="FlagList">
           <h2 className="H2">Choose your country</h2>
-          
+
           <div className="country-dropdown">
-            <div 
-              className="dropdown-header" 
+            <div
+              className="dropdown-header"
               onClick={() => setDropdownOpen(!dropdownOpen)}
             >
               {selected ? (
                 <div className="selected-option">
-                  <img 
-                    src={`https://flagcdn.com/w20/${selected.code}.png`} 
-                    alt={selected.name} 
+                  <img
+                    src={`https://flagcdn.com/w20/${selected.code}.png`}
+                    alt={selected.name}
                     style={{ marginRight: '8px' }}
                   />
                   {selected.name}
@@ -314,32 +315,38 @@ const FlagList = () => {
                 {dropdownOpen ? '▲' : '▼'}
               </span>
             </div>
-            
+
             {dropdownOpen && (
               <div className="dropdown-options">
-                {countries
-                  .filter((country) => !country.hidden)
-                  .map((country) => (
-                    <div
-                      key={country.name}
-                      className={`dropdown-option ${selected?.name === country.name ? 'selected' : ''}`}
-                      onClick={() => handleCountrySelect(country)}
-                    >
-                      <img 
-                        src={`https://flagcdn.com/w20/${country.code}.png`} 
-                        alt={country.name} 
-                        style={{ marginRight: '8px' }}
-                      />
-                      {country.name}
-                    </div>
-                  ))}
+                {countries.map((country) => (
+                  <div
+                    key={country.name}
+                    className={`dropdown-option ${selected?.name === country.name ? 'selected' : ''}`}
+                    onClick={() => handleCountrySelect(country)}
+                  >
+                    <img
+                      src={`https://flagcdn.com/w20/${country.code}.png`}
+                      alt={country.name}
+                      style={{ marginRight: '8px' }}
+                    />
+                    {country.name}
+                  </div>
+                ))}
               </div>
             )}
           </div>
         </div>
       )}
+
+      {showUpload && selected && (
+        <Upload
+          country={selected.backendName}
+          stayDays="30"
+        />
+      )}
     </>
   );
 };
+
 
 export default FlagList;
