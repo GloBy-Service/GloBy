@@ -69,7 +69,7 @@ const Navbar = () => {
       </div>
       <div className={`Navbar-Items ${isMobileMenuOpen ? 'open' : ''}`}>
         {/* <span onClick={() => scrollToSection('directions')}>{currentLanguage.visas}</span> */}
-        <span onClick={() => scrollToSection('info')}>AboutUs</span>
+        <span onClick={() => scrollToSection('info')}>About us</span>
         <span onClick={() => scrollToSection('countries')}>Countries</span>
         <span onClick={() => scrollToSection('input')}>Contact</span>
 
