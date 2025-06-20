@@ -287,6 +287,7 @@ const FlagList = () => {
 
   return (
     <>
+    
       {!showUpload && (
         <div className="FlagList">
           <h2 className="H2">Choose your country</h2>
