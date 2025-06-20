@@ -220,32 +220,41 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Upload from '../upload';
 import './../../../common/style/country.css';
+import { useLocation } from 'react-router';
 
 const countries = [
+  { name: 'Austria', backendName: 'Avstriya', code: 'at' },
+  { name: 'Belgium', backendName: 'Belçika', code: 'be' },
+  { name: 'Czechia', backendName: 'Çexiya', code: 'cz' },
+  { name: 'France', backendName: 'Fransa', code: 'fr' },
+  { name: 'Germany', backendName: 'Almaniya', code: 'de' },
+  { name: 'Hungary', backendName: 'Macarıstan', code: 'hu' },
+  { name: 'Italy', backendName: 'İtaliya', code: 'it' },
+  { name: 'Netherlands', backendName: 'Niderland', code: 'nl' },
+  { name: 'Norway', backendName: 'Norveç', code: 'no' },
+  { name: 'Poland', backendName: 'Polşa', code: 'pl' },
+
+  { name: 'USA', backendName: 'Amerika Birləşmiş Ştatları', code: 'us', hidden: true },
+  { name: 'Canada', backendName: 'Kanada', code: 'ca', hidden: true },
+  { name: 'UK', backendName: 'Birləşmiş Krallıq', code: 'gb', hidden: true },
+
   // { name: 'Albania', backendName: 'Albaniya', code: 'al' },
   // { name: 'Andorra', backendName: 'Andorra', code: 'ad' },
-  { name: 'Austria', backendName: 'Avstriya', code: 'at' },
   // { name: 'Azerbaijan', backendName: 'Azərbaycan', code: 'az' },
-  { name: 'Belgium', backendName: 'Belçika', code: 'be' },
   // { name: 'Bosnia and Herzegovina', backendName: 'Bosniya və Herseqovina', code: 'ba' },
   // { name: 'Bulgaria', backendName: 'Bolqarıstan', code: 'bg' },
   // { name: 'Croatia', backendName: 'Xorvatiya', code: 'hr' },
   // { name: 'Cyprus', backendName: 'Kipr', code: 'cy' },
-  { name: 'Czechia', backendName: 'Çexiya', code: 'cz' },
   // { name: 'Denmark', backendName: 'Danimarka', code: 'dk' },
   // { name: 'Estonia', backendName: 'Estoniya', code: 'ee' },
   // { name: 'Finland', backendName: 'Finlandiya', code: 'fi' },
-  { name: 'France', backendName: 'Fransa', code: 'fr' },
   // { name: 'Georgia', backendName: 'Gürcüstan', code: 'ge' },
-  { name: 'Germany', backendName: 'Almaniya', code: 'de' },
   // { name: 'Greece', backendName: 'Yunanıstan', code: 'gr' },
-  { name: 'Hungary', backendName: 'Macarıstan', code: 'hu' },
   // { name: 'Iceland', backendName: 'İslandiya', code: 'is' },
   // { name: 'Ireland', backendName: 'İrlandiya', code: 'ie' },
-  { name: 'Italy', backendName: 'İtaliya', code: 'it' },
   // { name: 'Kosovo', backendName: 'Kosovo', code: 'xk' },
   // { name: 'Latvia', backendName: 'Latviya', code: 'lv' },
   // { name: 'Liechtenstein', backendName: 'Lixtenşteyn', code: 'li' },
@@ -255,10 +264,7 @@ const countries = [
   // { name: 'Moldova', backendName: 'Moldova', code: 'md' },
   // { name: 'Monaco', backendName: 'Monako', code: 'mc' },
   // { name: 'Montenegro', backendName: 'Monteneqro', code: 'me' },
-  { name: 'Netherlands', backendName: 'Niderland', code: 'nl' },
   // { name: 'North Macedonia', backendName: 'Şimali Makedoniya', code: 'mk' },
-  { name: 'Norway', backendName: 'Norveç', code: 'no' },
-  { name: 'Poland', backendName: 'Polşa', code: 'pl' },
   // { name: 'Portugal', backendName: 'Portuqaliya', code: 'pt' },
   // { name: 'Romania', backendName: 'Rumıniya', code: 'ro' },
   // { name: 'San Marino', backendName: 'San Marino', code: 'sm' },
@@ -278,6 +284,25 @@ const FlagList = () => {
   const [selected, setSelected] = useState(null);
   const [showUpload, setShowUpload] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = location.pathname.toLowerCase();
+
+    if (path.includes('/usa')) {
+      const usa = countries.find(c => c.name === 'USA');
+      setSelected(usa);
+      setShowUpload(true);
+    } else if (path.includes('/uk')) {
+      const uk = countries.find(c => c.name === 'UK');
+      setSelected(uk);
+      setShowUpload(true);
+    } else if (path.includes('/canada')) {
+      const ca = countries.find(c => c.name === 'Canada');
+      setSelected(ca);
+      setShowUpload(true);
+    }
+  }, [location.pathname]);
 
   const handleCountrySelect = (country) => {
     setSelected(country);
@@ -287,7 +312,6 @@ const FlagList = () => {
 
   return (
     <>
-    
       {!showUpload && (
         <div className="FlagList">
           <h2 className="H2">Choose your country</h2>
@@ -316,19 +340,21 @@ const FlagList = () => {
             
             {dropdownOpen && (
               <div className="dropdown-options">
-                {countries.map((country) => (
-                  <div
-                    key={country.name}
-                    className={`dropdown-option ${selected?.name === country.name ? 'selected' : ''}`}
-                    onClick={() => handleCountrySelect(country)}
-                  >
-                    <img 
-                      src={`https://flagcdn.com/w20/${country.code}.png`} 
-                      alt={country.name} 
-                      style={{ marginRight: '8px' }}
-                    />
-                    {country.name}
-                  </div>
+                {countries
+                  .filter((country) => !country.hidden)
+                  .map((country) => (
+                    <div
+                      key={country.name}
+                      className={`dropdown-option ${selected?.name === country.name ? 'selected' : ''}`}
+                      onClick={() => handleCountrySelect(country)}
+                    >
+                      <img 
+                        src={`https://flagcdn.com/w20/${country.code}.png`} 
+                        alt={country.name} 
+                        style={{ marginRight: '8px' }}
+                      />
+                      {country.name}
+                    </div>
                 ))}
               </div>
             )}
@@ -339,7 +365,7 @@ const FlagList = () => {
       {showUpload && selected && (
         <Upload
           country={selected.backendName}
-          // stayDays="30" 
+          stayDays="30" 
         />
       )}
     </>
