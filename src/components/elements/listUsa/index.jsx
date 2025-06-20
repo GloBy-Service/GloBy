@@ -4,7 +4,7 @@ import './../../../common/style/country.css';
 
 const usa = { name: 'USA', backendName: 'USA', code: 'us' };
 
-const FlagList = () => {
+const FlagListUsa = () => {
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
@@ -23,4 +23,4 @@ const FlagList = () => {
   );
 };
 
-export default FlagList;
+export default FlagListUsa;
