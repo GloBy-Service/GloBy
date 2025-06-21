@@ -219,51 +219,52 @@ const Upload = ({ country, stayDays }) => {
     setFiles([]);
     showNotification('info', 'All files cleared');
   };
-  const handleSubmit = async () => {
-    if (!privacyChecked) {
-      setHighlight(true);
-      showNotification('error', 'Please agree to the Privacy Policy');
-      setTimeout(() => setHighlight(false), 800);
-      return;
-    }
-    if (files.length === 0) {
-      showNotification('error', 'Please add at least one file');
-      return;
-    }
 
-    setStatus('uploading');
-    showNotification('info', 'Uploading files...');
+const handleSubmit = async () => {
+  if (!privacyChecked) {
+    setHighlight(true);
+    showNotification('error', 'Please agree to the Privacy Policy');
+    setTimeout(() => setHighlight(false), 800);
+    return;
+  }
+  if (files.length === 0) {
+    showNotification('error', 'Please add at least one file');
+    return;
+  }
 
-    try {
-      const apiBase = import.meta.env.VITE_API_URL;
-      const formData = new FormData();
-      files.forEach((f) => formData.append('file', f));
-      formData.append('country', country);
-      formData.append('stayDays', stayDays);
+  setStatus('uploading');
+  showNotification('info', 'Uploading files...');
 
-      const res = await fetch(`${apiBase}/statements/evaluate/pdf`, {
-        method: 'POST',
-        body: formData,
-      });
+  try {
+    const apiBase = import.meta.env.VITE_API_URL;
+    const formData = new FormData();
+    files.forEach((f) => formData.append('file', f));
+    formData.append('country', country);
+    formData.append('stayDays', stayDays);
 
-      const responseData = await res.json(); 
+    const res = await fetch(`${apiBase}/statements/evaluate/pdf`, {
+      method: 'POST',
+      body: formData,
+    });
 
-      if (!res.ok) {
-        if (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur')) {
-          throw new Error('Minimum required date range not available. Minimum: 90 days');
-        }
-        throw new Error(responseData.message || 'Upload failed');
-      }
-
-      setStatus('success');
-      showNotification('success', responseData.message || 'Upload successful!');
-      setFiles([]);
-    } catch (error) {
-      console.error('Upload error:', error);
+    const responseData = await res.json(); // Always parse the response first
+    
+    // Check for the specific error message in both the response data and status
+    if (!res.ok || (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur'))) {
       setStatus('error');
-      showNotification('error', error.message || 'Upload failed. Please try again.');
+      showNotification('error', responseData.message || 'Minimum required date range not available. Minimum: 90 days');
+      return;
     }
-  };
+
+    setStatus('success');
+    showNotification('success', responseData.message || 'Upload successful!');
+    setFiles([]);
+  } catch (error) {
+    console.error('Upload error:', error);
+    setStatus('error');
+    showNotification('error', error.message || 'Upload failed. Please try again.');
+  }
+};
 
   return (
     <div className="Upload-Group">
