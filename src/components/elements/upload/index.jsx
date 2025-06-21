@@ -219,7 +219,6 @@ const Upload = ({ country, stayDays }) => {
     setFiles([]);
     showNotification('info', 'All files cleared');
   };
-
   const handleSubmit = async () => {
     if (!privacyChecked) {
       setHighlight(true);
@@ -247,14 +246,17 @@ const Upload = ({ country, stayDays }) => {
         body: formData,
       });
 
+      const responseData = await res.json(); 
+
       if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Upload failed');
+        if (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur')) {
+          throw new Error('Minimum required date range not available. Minimum: 90 days');
+        }
+        throw new Error(responseData.message || 'Upload failed');
       }
 
-      const json = await res.json();
       setStatus('success');
-      showNotification('success', json.message || 'Upload successful!');
+      showNotification('success', responseData.message || 'Upload successful!');
       setFiles([]);
     } catch (error) {
       console.error('Upload error:', error);
