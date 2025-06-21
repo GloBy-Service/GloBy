@@ -152,7 +152,6 @@
 
 // export default Upload;
 
-
 import React, { useRef, useState } from 'react';
 import { FaRegFileAlt, FaTimes, FaCheck, FaExclamationTriangle } from 'react-icons/fa';
 import { MdOutlineRefresh, MdClearAll } from 'react-icons/md';
@@ -220,51 +219,56 @@ const Upload = ({ country, stayDays }) => {
     showNotification('info', 'All files cleared');
   };
 
-const handleSubmit = async () => {
-  if (!privacyChecked) {
-    setHighlight(true);
-    showNotification('error', 'Please agree to the Privacy Policy');
-    setTimeout(() => setHighlight(false), 800);
-    return;
-  }
-  if (files.length === 0) {
-    showNotification('error', 'Please add at least one file');
-    return;
-  }
+  const refreshUpload = () => {
+    setStatus('idle');
+    setFiles([]);
+    showNotification('info', 'Upload reset');
+  };
 
-  setStatus('uploading');
-  showNotification('info', 'Uploading files...');
-
-  try {
-    const apiBase = import.meta.env.VITE_API_URL;
-    const formData = new FormData();
-    files.forEach((f) => formData.append('file', f));
-    formData.append('country', country);
-    formData.append('stayDays', stayDays);
-
-    const res = await fetch(`${apiBase}/statements/evaluate/pdf`, {
-      method: 'POST',
-      body: formData,
-    });
-
-    const responseData = await res.json(); // Always parse the response first
-    
-    // Check for the specific error message in both the response data and status
-    if (!res.ok || (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur'))) {
-      setStatus('error');
-      showNotification('error', responseData.message || 'Minimum required date range not available. Minimum: 90 days');
+  const handleSubmit = async () => {
+    if (!privacyChecked) {
+      setHighlight(true);
+      showNotification('error', 'Please agree to the Privacy Policy');
+      setTimeout(() => setHighlight(false), 800);
+      return;
+    }
+    if (files.length === 0) {
+      showNotification('error', 'Please add at least one file');
       return;
     }
 
-    setStatus('success');
-    showNotification('success', responseData.message || 'Upload successful!');
-    setFiles([]);
-  } catch (error) {
-    console.error('Upload error:', error);
-    setStatus('error');
-    showNotification('error', error.message || 'Upload failed. Please try again.');
-  }
-};
+    setStatus('uploading');
+    showNotification('info', 'Uploading files...');
+
+    try {
+      const apiBase = import.meta.env.VITE_API_URL;
+      const formData = new FormData();
+      files.forEach((f) => formData.append('file', f));
+      formData.append('country', country);
+      formData.append('stayDays', stayDays);
+
+      const res = await fetch(`${apiBase}/statements/evaluate/pdf`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const responseData = await res.json(); 
+      
+      if (!res.ok || (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur'))) {
+        setStatus('error');
+        showNotification('error', responseData.message || 'Minimum required date range not available. Minimum: 90 days');
+        return;
+      }
+
+      setStatus('success');
+      showNotification('success', responseData.message || 'Upload successful!');
+      setFiles([]);
+    } catch (error) {
+      console.error('Upload error:', error);
+      setStatus('error');
+      showNotification('error', error.message || 'Upload failed. Please try again.');
+    }
+  };
 
   return (
     <div className="Upload-Group">
@@ -272,6 +276,18 @@ const handleSubmit = async () => {
         <h2 className="upload-title">Document Scan</h2>
 
         <div className={`upload-box ${status}`}>
+          {/* Refresh button in the top-right corner */}
+          {(status === 'success' || status === 'error') && (
+            <button 
+              className="refresh-upload-btn"
+              
+              onClick={refreshUpload}
+              title="Reset upload"
+            >
+              <MdOutlineRefresh />
+            </button>
+          )}
+
           <div className="upload-icon-container">
             {status === 'uploading' ? (
               <div className="upload-spinner"></div>
@@ -406,10 +422,6 @@ const handleSubmit = async () => {
             </div>
           </div>
         )}
-
-        <style>{`
-       
-      `}</style>
       </div>
     </div>
   );

@@ -81,7 +81,7 @@
 }
 
 .Upload-Group {
-    width: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -176,7 +176,40 @@
 
 
 
+.refresh-upload-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
 
+  -o-border-radius: 50%;
+}
+
+.refresh-upload-btn:hover {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.upload-box {
+  position: relative;
+  
+}
 
 
 
@@ -1451,7 +1484,7 @@ button:hover {
 @media (max-width: 480px) {
   .upload-container {
     padding: 1rem;
-    
+
   }
 
   .upload-box {
