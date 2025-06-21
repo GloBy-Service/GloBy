@@ -169,7 +169,7 @@ const Upload = ({ country, stayDays }) => {
 
   const showNotification = (type, message) => {
     setNotification({ type, message });
-    setTimeout(() => setNotification(null), 6000);
+    setTimeout(() => setNotification(null), 8000);
   };
 
   const pickFile = () => {
@@ -276,7 +276,6 @@ const Upload = ({ country, stayDays }) => {
         <h2 className="upload-title">Document Scan</h2>
 
         <div className={`upload-box ${status}`}>
-          {/* Refresh button in the top-right corner */}
           {(status === 'success' || status === 'error') && (
             <button 
               className="refresh-upload-btn"
