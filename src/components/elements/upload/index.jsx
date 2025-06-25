@@ -478,6 +478,7 @@ const Upload = ({ country, stayDays }) => {
             )}
           </div>
 
+
           <p className="upload-instruction">
             {status === 'uploading'
               ? 'Processing your documents...'
