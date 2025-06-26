@@ -422,9 +422,7 @@ const handleSubmit = async () => {
 
     const responseData = await res.json();
 
-    // First check for the credit warning
     if (responseData.message && responseData.message.includes('Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır')) {
-      // Improved number extraction from message
       const numberPattern = /(\d+\.?\d*)/g;
       const numbers = responseData.message.match(numberPattern);
       
@@ -443,14 +441,12 @@ const handleSubmit = async () => {
       return;
     }
 
-    // Then check for other error cases
     if (!res.ok || (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur'))) {
       setStatus('error');
       showNotification('error', responseData.message || 'Minimum required date range not available. Minimum: 90 days');
       return;
     }
 
-    // Only treat as success if none of the above conditions are met
     setStatus('success');
     showNotification('success', responseData.message || 'Upload successful!');
     setFiles([]);
