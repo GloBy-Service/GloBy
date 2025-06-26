@@ -422,26 +422,27 @@ const handleSubmit = async () => {
 
     const responseData = await res.json();
 
+    // First check for the credit warning - this should be treated as an error
     if (responseData.message && responseData.message.includes('Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır')) {
-      const requiredAmountMatch = responseData.message.match(/Tələb olunan: "([^"]+)" AZN/);
-      const yourAmountMatch = responseData.message.match(/sizdə: "([^"]+)" AZN/);
+      // Extract the numbers from backend response
+      const requiredAmount = responseData.requiredAmount || 'unknown';
+      const yourAmount = responseData.yourAmount || 'unknown';
       
-      const requiredAmount = requiredAmountMatch ? requiredAmountMatch[1] : 'unknown';
-      const yourAmount = yourAmountMatch ? yourAmountMatch[1] : 'unknown';
-      
-      setStatus('warning');
-      showNotification('warning', 
+      setStatus('error');
+      showNotification('error', 
         `Average daily credit is below the required minimum. Required: ${requiredAmount} AZN, Yours: ${yourAmount} AZN`
       );
       return;
     }
 
+    // Then check for other error cases
     if (!res.ok || (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur'))) {
       setStatus('error');
       showNotification('error', responseData.message || 'Minimum required date range not available. Minimum: 90 days');
       return;
     }
 
+    // Only treat as success if none of the above conditions are met
     setStatus('success');
     showNotification('success', responseData.message || 'Upload successful!');
     setFiles([]);
