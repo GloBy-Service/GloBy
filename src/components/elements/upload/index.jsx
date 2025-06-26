@@ -422,11 +422,19 @@ const handleSubmit = async () => {
 
     const responseData = await res.json();
 
-    // First check for the credit warning - this should be treated as an error
+    // First check for the credit warning
     if (responseData.message && responseData.message.includes('Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır')) {
-      // Extract the numbers from backend response
-      const requiredAmount = responseData.requiredAmount || 'unknown';
-      const yourAmount = responseData.yourAmount || 'unknown';
+      // Improved number extraction from message
+      const numberPattern = /(\d+\.?\d*)/g;
+      const numbers = responseData.message.match(numberPattern);
+      
+      let requiredAmount = 'unknown';
+      let yourAmount = 'unknown';
+      
+      if (numbers && numbers.length >= 2) {
+        requiredAmount = numbers[0];
+        yourAmount = numbers[1];
+      }
       
       setStatus('error');
       showNotification('error', 
