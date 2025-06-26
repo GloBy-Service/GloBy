@@ -422,26 +422,23 @@ const handleSubmit = async () => {
 
     const responseData = await res.json();
 
-    if (!res.ok) {
-      setStatus('error');
+    if (responseData.message && responseData.message.includes('Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır')) {
+      const requiredAmountMatch = responseData.message.match(/Tələb olunan: "([^"]+)" AZN/);
+      const yourAmountMatch = responseData.message.match(/sizdə: "([^"]+)" AZN/);
       
-      if (responseData.message && responseData.message.includes('Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır')) {
-        const requiredAmountMatch = responseData.message.match(/Tələb olunan: "([^"]+)" AZN/);
-        const yourAmountMatch = responseData.message.match(/sizdə: "([^"]+)" AZN/);
-        
-        const requiredAmount = requiredAmountMatch ? requiredAmountMatch[1] : 'unknown';
-        const yourAmount = yourAmountMatch ? yourAmountMatch[1] : 'unknown';
-        
-        showNotification('warning', 
-          `Average daily credit is below the required minimum. Required: ${requiredAmount} AZN, Yours: ${yourAmount} AZN`
-        );
-      } 
-      else if (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur')) {
-        showNotification('error', responseData.message || 'Minimum required date range not available. Minimum: 90 days');
-      }
-      else {
-        showNotification('error', responseData.message || 'Upload failed. Please try again.');
-      }
+      const requiredAmount = requiredAmountMatch ? requiredAmountMatch[1] : 'unknown';
+      const yourAmount = yourAmountMatch ? yourAmountMatch[1] : 'unknown';
+      
+      setStatus('warning');
+      showNotification('warning', 
+        `Average daily credit is below the required minimum. Required: ${requiredAmount} AZN, Yours: ${yourAmount} AZN`
+      );
+      return;
+    }
+
+    if (!res.ok || (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur'))) {
+      setStatus('error');
+      showNotification('error', responseData.message || 'Minimum required date range not available. Minimum: 90 days');
       return;
     }
 
