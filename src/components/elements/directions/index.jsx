@@ -1,22 +1,31 @@
-import React, { useRef } from 'react';
-import { Link } from 'react-router-dom'; // ✅ Import Link
+import React, { useRef, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../../common/style/root.css';
 import usaFlagMp4 from '../../../assets/video/USA.mp4';
 import europeFlagMp4 from '../../../assets/video/Europe.mp4';
 import ukFlagMp4 from '../../../assets/video/UK.mp4';
 import canadaFlagMp4 from '../../../assets/video/Canada.mp4';
 
+const isMobileDevice = () => {
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+};
+
 const FlagItem = ({ videoSrc, label, path }) => {
   const videoRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+  }, []);
 
   const handleMouseEnter = () => {
-    if (videoRef.current) {
+    if (!isMobile && videoRef.current) {
       videoRef.current.play();
     }
   };
 
   const handleMouseLeave = () => {
-    if (videoRef.current) {
+    if (!isMobile && videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
     }
@@ -35,6 +44,7 @@ const FlagItem = ({ videoSrc, label, path }) => {
           muted
           loop
           playsInline
+          autoPlay={isMobile}
           className="Flag-Video"
         />
         <div className="Flag-Label">{label}</div>
