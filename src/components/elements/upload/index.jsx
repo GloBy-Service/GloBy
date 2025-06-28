@@ -127,7 +127,10 @@
 //           {(status === 'success' || status === 'error') && (
 //             <button 
 //               className="refresh-upload-btn"
+ 
 
+
+              
 //               onClick={refreshUpload}
 //               title="Reset upload"
 //             >
@@ -364,7 +367,7 @@ const Upload = ({ country, stayDays }) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
-
+    
     if (!privacyChecked) {
       setHighlight(true);
       showNotification('error', 'Please agree to the Privacy Policy');
@@ -496,6 +499,8 @@ const handleSubmit = async () => {
               />
             )}
           </div>
+          
+
 
 
 
