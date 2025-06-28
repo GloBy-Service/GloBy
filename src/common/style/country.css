@@ -1465,7 +1465,6 @@ button:hover {
 font-size: 20px;
 }
 
-=======
 .upload-box.dragging {
   border: 2px dashed #4a90e2;
   background-color: rgba(74, 144, 226, 0.1);
@@ -1480,9 +1479,12 @@ font-size: 20px;
 .upload-box.dragging {
   border: 2px dashed #0099ff;
   background-color: rgba(0, 153, 255, 0.05);
+}
+
 .notification.success .notification-icon {
   color: #2ecc71;
 }
+
 .upload-box.dragging {
   border: 2px dashed #4a90e2;
   background-color: rgba(74, 144, 226, 0.1);
