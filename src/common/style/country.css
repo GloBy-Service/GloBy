@@ -1454,6 +1454,18 @@ button:hover {
   flex-shrink: 0;
 }
 
+
+.notification .notification-close-btn{
+  background: none;
+  color: black;
+  margin-top: 0.2rem;
+}
+
+.notification-close-btn svg{
+font-size: 20px;
+}
+
+=======
 .upload-box.dragging {
   border: 2px dashed #4a90e2;
   background-color: rgba(74, 144, 226, 0.1);
@@ -1468,11 +1480,23 @@ button:hover {
 .upload-box.dragging {
   border: 2px dashed #0099ff;
   background-color: rgba(0, 153, 255, 0.05);
-}
-
-
 .notification.success .notification-icon {
   color: #2ecc71;
+}
+.upload-box.dragging {
+  border: 2px dashed #4a90e2;
+  background-color: rgba(74, 144, 226, 0.1);
+}
+
+.upload-drop-hint {
+  font-size: 24px;
+  color: #4a90e2;
+  margin-bottom: 15px;
+}
+
+.upload-box.dragging {
+  border: 2px dashed #0099ff;
+  background-color: rgba(0, 153, 255, 0.05);
 }
 
 .notification.error .notification-icon {

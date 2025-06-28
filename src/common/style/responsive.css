@@ -1,3 +1,19 @@
+@media screen and (min-width: 0px) and (max-width: 400px) {
+.Info-Group, .Header-Group, .country {
+  margin-inline: 1rem !important;
+}
+  .Directions-Group, .Numbers-Group, .Input-Group, .Upload-Group, .Navbar {
+    padding-inline: 1rem !important;
+  }
+
+  .Input-Button  {
+    margin-bottom: 2rem !important;
+  }
+
+  .Input-Card {
+    height: 100% !important;
+  }
+}
 @media screen and (max-width: 767px) {
 
   .Plane-Animation {
@@ -71,8 +87,10 @@
 }
 
 }
-
 @media screen and (min-width: 1024px) {
+
+  @import url('./desktop/text.txt');
+
     body {
         zoom: 90% !important;
     }

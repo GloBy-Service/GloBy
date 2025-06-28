@@ -101,7 +101,7 @@
 //       });
 
 //       const responseData = await res.json(); 
-      
+
 //       if (!res.ok || (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur'))) {
 //         setStatus('error');
 //         showNotification('error', responseData.message || 'Minimum required date range not available. Minimum: 90 days');
@@ -127,6 +127,9 @@
 //           {(status === 'success' || status === 'error') && (
 //             <button 
 //               className="refresh-upload-btn"
+ 
+
+
               
 //               onClick={refreshUpload}
 //               title="Reset upload"
@@ -294,7 +297,7 @@ const Upload = ({ country, stayDays }) => {
 
   const showNotification = (type, message) => {
     setNotification({ type, message });
-    setTimeout(() => setNotification(null), 8000);
+    setTimeout(() => setNotification(null), 40000);
   };
 
   const pickFile = () => {
@@ -330,7 +333,7 @@ const Upload = ({ country, stayDays }) => {
   const addFiles = useCallback((newFiles) => {
     setStatus('idle');
     const validFiles = Array.from(newFiles).filter(validateFile);
-    
+
     if (validFiles.length > 0) {
       setFiles((prev) => [...prev, ...validFiles]);
       showNotification('success', 'File(s) added successfully');
@@ -393,57 +396,76 @@ const Upload = ({ country, stayDays }) => {
     showNotification('info', 'Upload reset');
   };
 
-  const handleSubmit = async () => {
-    if (!privacyChecked) {
-      setHighlight(true);
-      showNotification('error', 'Please agree to the Privacy Policy');
-      setTimeout(() => setHighlight(false), 800);
-      return;
-    }
-    if (files.length === 0) {
-      showNotification('error', 'Please add at least one file');
-      return;
-    }
+const handleSubmit = async () => {
+  if (!privacyChecked) {
+    setHighlight(true);
+    showNotification('error', 'Please agree to the Privacy Policy');
+    setTimeout(() => setHighlight(false), 800);
+    return;
+  }
+  if (files.length === 0) {
+    showNotification('error', 'Please add at least one file');
+    return;
+  }
 
-    setStatus('uploading');
-    showNotification('info', 'Uploading files...');
+  setStatus('uploading');
+  showNotification('info', 'Uploading files...');
 
-    try {
-      const apiBase = import.meta.env.VITE_API_URL;
-      const formData = new FormData();
-      files.forEach((f) => formData.append('file', f));
-      formData.append('country', country);
-      formData.append('stayDays', stayDays);
+  try {
+    const apiBase = import.meta.env.VITE_API_URL;
+    const formData = new FormData();
+    files.forEach((f) => formData.append('file', f));
+    formData.append('country', country);
+    formData.append('stayDays', stayDays);
 
-      const res = await fetch(`${apiBase}/statements/evaluate/pdf`, {
-        method: 'POST',
-        body: formData,
-      });
+    const res = await fetch(`${apiBase}/statements/evaluate/pdf`, {
+      method: 'POST',
+      body: formData,
+    });
 
-      const responseData = await res.json(); 
+    const responseData = await res.json();
+
+    if (responseData.message && responseData.message.includes('Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır')) {
+      const numberPattern = /(\d+\.?\d*)/g;
+      const numbers = responseData.message.match(numberPattern);
       
-      if (!res.ok || (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur'))) {
-        setStatus('error');
-        showNotification('error', responseData.message || 'Minimum required date range not available. Minimum: 90 days');
-        return;
+      let requiredAmount = 'unknown';
+      let yourAmount = 'unknown';
+      
+      if (numbers && numbers.length >= 2) {
+        requiredAmount = numbers[0];
+        yourAmount = numbers[1];
       }
-
-      setStatus('success');
-      showNotification('success', responseData.message || 'Upload successful!');
-      setFiles([]);
-    } catch (error) {
-      console.error('Upload error:', error);
+      
       setStatus('error');
-      showNotification('error', error.message || 'Upload failed. Please try again.');
+      showNotification('error', 
+        `Average daily credit is below the required minimum. Required: ${requiredAmount} AZN, Yours: ${yourAmount} AZN`
+      );
+      return;
     }
-  };
+
+    if (!res.ok || (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur'))) {
+      setStatus('error');
+      showNotification('error', responseData.message || 'Minimum required date range not available. Minimum: 90 days');
+      return;
+    }
+
+    setStatus('success');
+    showNotification('success', responseData.message || 'Upload successful!');
+    setFiles([]);
+  } catch (error) {
+    console.error('Upload error:', error);
+    setStatus('error');
+    showNotification('error', error.message || 'Upload failed. Please try again.');
+  }
+};
 
   return (
     <div className="Upload-Group">
       <div className="upload-container">
         <h2 className="upload-title">Document Scan</h2>
 
-        <div 
+        <div
           className={`upload-box ${status} ${isDragging ? 'dragging' : ''}`}
           onDragEnter={handleDragEnter}
           onDragLeave={handleDragLeave}
@@ -451,7 +473,7 @@ const Upload = ({ country, stayDays }) => {
           onDrop={handleDrop}
         >
           {(status === 'success' || status === 'error') && (
-            <button 
+            <button
               className="refresh-upload-btn"
               onClick={refreshUpload}
               title="Reset upload"
@@ -478,6 +500,8 @@ const Upload = ({ country, stayDays }) => {
             )}
           </div>
           
+
+
 
 
           <p className="upload-instruction">
@@ -598,6 +622,13 @@ const Upload = ({ country, stayDays }) => {
             <div className="notification-content">
               <p>{notification.message}</p>
             </div>
+            <button
+              className="notification-close-btn"
+              onClick={() => setNotification(null)}
+              title="Close notification"
+            >
+              <FaTimes />
+            </button>
           </div>
         )}
       </div>
