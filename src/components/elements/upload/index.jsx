@@ -392,7 +392,8 @@ const Upload = ({ country, stayDays }) => {
     setFiles([]);
     showNotification('info', 'Upload reset');
   };
-
+  
+  
 const handleSubmit = async () => {
   if (!privacyChecked) {
     setHighlight(true);
