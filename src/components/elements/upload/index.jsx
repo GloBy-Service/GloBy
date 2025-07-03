@@ -422,7 +422,22 @@ const handleSubmit = async () => {
 
     const responseData = await res.json();
 
-    // First check for insufficient funds error
+    // Check for successful response first
+    if (res.ok) {
+      // Then verify there are no error messages in the response
+      if (!responseData.message || 
+          (!responseData.message.includes('Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır') && 
+           !responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur'))) {
+        setStatus('success');
+        showNotification('success', responseData.message || 'Upload successful!');
+        setFiles([]);
+        return;
+      }
+    }
+
+    // Handle all error cases
+    setStatus('error');
+    
     if (responseData.message && responseData.message.includes('Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır')) {
       const numberPattern = /(\d+\.?\d*)/g;
       const numbers = responseData.message.match(numberPattern);
@@ -435,24 +450,14 @@ const handleSubmit = async () => {
         yourAmount = numbers[1];
       }
       
-      setStatus('error');
       showNotification('error', 
         `Average daily expense is below the required minimum. Required: ${requiredAmount} AZN, Yours: ${yourAmount} AZN`
       );
-      return;
-    }
-
-    // Then check for other errors
-    if (!res.ok) {
-      setStatus('error');
+    } else if (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur')) {
+      showNotification('error', responseData.message || 'Minimum required date range not available. Minimum: 90 days');
+    } else {
       showNotification('error', responseData.message || 'Upload failed. Please try again.');
-      return;
     }
-
-    // Only show success if everything is okay
-    setStatus('success');
-    showNotification('success', responseData.message || 'Upload successful!');
-    setFiles([]);
   } catch (error) {
     console.error('Upload error:', error);
     setStatus('error');
