@@ -422,6 +422,7 @@ const handleSubmit = async () => {
 
     const responseData = await res.json();
 
+    // First check for insufficient funds error
     if (responseData.message && responseData.message.includes('Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır')) {
       const numberPattern = /(\d+\.?\d*)/g;
       const numbers = responseData.message.match(numberPattern);
@@ -436,17 +437,19 @@ const handleSubmit = async () => {
       
       setStatus('error');
       showNotification('error', 
-        `Average daily credit is below the required minimum. Required: ${requiredAmount} AZN, Yours: ${yourAmount} AZN`
+        `Average daily expense is below the required minimum. Required: ${requiredAmount} AZN, Yours: ${yourAmount} AZN`
       );
       return;
     }
 
-    if (!res.ok || (responseData.message && responseData.message.includes('Minimum tələb olunan tarix aralığı yoxdur'))) {
+    // Then check for other errors
+    if (!res.ok) {
       setStatus('error');
-      showNotification('error', responseData.message || 'Minimum required date range not available. Minimum: 90 days');
+      showNotification('error', responseData.message || 'Upload failed. Please try again.');
       return;
     }
 
+    // Only show success if everything is okay
     setStatus('success');
     showNotification('success', responseData.message || 'Upload successful!');
     setFiles([]);
