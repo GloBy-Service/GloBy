@@ -147,10 +147,18 @@ const handleSubmit = async () => {
 
     const responseData = await res.json();
 
-    // Check for insufficient funds error first
-    if (responseData.message && 
-        (responseData.message.includes('Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır') || 
-         responseData.message.includes('Average daily expense is below the required minimum'))) {
+    // First check the response content regardless of status code
+    const errorPhrases = [
+      'Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır',
+      'Average daily expense is below the required minimum',
+      'Average daily expense for asked country is less than minimum'
+    ];
+
+    const isInsufficientFunds = errorPhrases.some(phrase => 
+      responseData.message && responseData.message.includes(phrase)
+    );
+
+    if (isInsufficientFunds) {
       const numberPattern = /(\d+\.?\d*)/g;
       const numbers = responseData.message.match(numberPattern);
       
@@ -169,7 +177,7 @@ const handleSubmit = async () => {
       return;
     }
 
-    // Then check for other errors
+    // Then check HTTP status code
     if (!res.ok) {
       setStatus('error');
       showNotification('error', responseData.message || 'Upload failed. Please try again.');
