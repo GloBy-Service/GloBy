@@ -3,14 +3,11 @@ name: Frontend CI/CD
 on:
   push:
     branches:
-      - prod
       - dev
 env:
   REGISTRY: docker.io
   IMAGE_NAME: therzarzayev/globy-frontend:${{ github.ref_name }}-${{ github.run_number }}
-  GKE_CLUSTER: globy-cluster
-  GKE_ZONE: us-central1-c
-  PROJECT_ID: possible-dream-460619-t4
+
 
 jobs:
   build:
@@ -70,41 +67,32 @@ jobs:
   deploy:
     needs: docker
     runs-on: ubuntu-latest
-    container:
-      image: google/cloud-sdk:latest
-  
+
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
-  
-      - name: Authenticate with GCP
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-  
-      - name: Configure gcloud and get GKE credentials
+
+      - name: Install sshpass and setup SSH
         run: |
-          gcloud config set project $PROJECT_ID
-          gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
-  
-      - name: Set ingress host based on branch
-        shell: bash
-        run: |
-          if [[ "${{ github.ref_name }}" == "dev" ]]; then
-            echo "K8S_INGRESS_HOST=${{ secrets.DEV_INGRESS_HOST }}" >> $GITHUB_ENV
-          elif [[ "${{ github.ref_name }}" == "prod" ]]; then
-            echo "K8S_INGRESS_HOST=${{ secrets.PROD_INGRESS_HOST }}" >> $GITHUB_ENV
-          else
-            echo "Unsupported branch"; exit 1
-          fi
-  
-      - name: Deploy to GKE
-        shell: bash
-        run: |
-          sed -e "s|\${IMAGE_NAME}|${IMAGE_NAME}|g" \
-              -e "s|\${K8S_INGRESS_HOST}|${K8S_INGRESS_HOST}|g" \
-              -e "s|\${K8S_NAMESPACE}|${K8S_NAMESPACE}|g" \
-              deploy/k8s.yaml > k8s-temp.yaml
-          kubectl apply -f k8s-temp.yaml
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+          mkdir -p ~/.ssh
+          ssh-keyscan ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts || true
+
+      - name: Deploy via SSH
         env:
-          K8S_NAMESPACE: globy-${{ github.ref_name }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PASS: ${{ secrets.SERVER_PASS }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+        run: |
+          echo "Deploying to $SERVER_IP"
+          sshpass -p "$SERVER_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD &&
+            docker pull $IMAGE_NAME &&
+            docker stop globy-front || true &&
+            docker rm globy-front || true &&
+            docker run -d --name globy-front --restart=always -p 3000:80 $IMAGE_NAME
+          "
