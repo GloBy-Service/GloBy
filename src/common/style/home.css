@@ -223,7 +223,7 @@
     background-color: var(--primary-color);
     color: white;
     padding-inline: 2rem;
-    height: 27rem;
+    height: 37rem;
     border-radius: 0;
     box-sizing: border-box;
     border-radius: 15px;
@@ -231,6 +231,12 @@
     -moz-border-radius: 15px;
     -ms-border-radius: 15px;
     -o-border-radius: 15px;
+}
+
+.Input-Name {
+  background: var(--primary-color);
+    border: 1px solid var(--white-color);
+    color: white;
 }
 
 .Input-Left {
