@@ -147,6 +147,7 @@ const handleSubmit = async (e) => {
                                             value={countrySearch}
                                             onChange={handleCountrySearch}
                                             autoFocus
+                                            className='search-country'
                                         />
                                         <div className="Country-List">
                                             {filteredCountries.map((c) => (

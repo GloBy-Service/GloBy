@@ -217,6 +217,7 @@
 
 .Input-Card {
      max-width: 65rem;
+     overflow: hidden;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -595,7 +596,7 @@
 
 
 .Input-Name {
-  width: 100%;
+  width: 40%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -609,6 +610,68 @@
   border-radius: 4px;
   cursor: pointer;
   position: relative;
+  z-index: 2;
+background:var(--primary-color);
+  width: 40%;
+  cursor: pointer;
+}
+
+/* Entire scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* or height for horizontal */
+  background: var(--primary-color);
+}
+
+/* Scrollbar track (the area behind the thumb) */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+
+
+.Input-Country input {
+  background:none;
+  color: white;
+  width: 100%;
+    /* padding: 10px; */
+  /* margin-bottom: 15px; */
+  border: none;
+  border-radius: 4px;
+}
+
+.Rating-Input {
+  font-size: 20px;
+  margin-top: 15px;
+}
+.Star {
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.Star.active {
+  filter: brightness(1.2) sepia(1) hue-rotate(10deg) saturate(10);
+  -webkit-filter: brightness(1.2) sepia(1) hue-rotate(10deg) saturate(10);
+}
+
+
+.search-country {
+ background:none;
+  color: white;
+    padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #cecece !important;
+  margin-top: 15px;
+  width: 100%;
+  border-radius: 4px;
 }
 
 .Country-Dropdown-Icon {
