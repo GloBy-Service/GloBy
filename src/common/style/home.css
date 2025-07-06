@@ -561,3 +561,131 @@
 .Input-Button.loading {
   pointer-events: none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ------------------------------------- */
+
+
+
+.Input-Name {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.Input-Country {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+
+.Country-Dropdown-Icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+}
+
+.Country-Popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.Country-Popup-Inner {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.Country-Search input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.Country-List-Container {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.Country-List {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.Country-Item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.Country-Item:hover, .Country-Item.selected {
+  background-color: #f0f0f0;
+}
+
+.Country-Close {
+  padding: 8px 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.Rating-Group {
+  margin-bottom: 15px;
+}
+
+.Rating-Star {
+  cursor: pointer;
+  font-size: 20px;
+  color: #ccc;
+  margin-left: 5px;
+}
+
+.Rating-Star.active {
+  color: #ffc107;
+}
