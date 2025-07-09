@@ -116,84 +116,84 @@ const Upload = ({ country, stayDays }) => {
     setFiles([]);
     showNotification('info', 'Upload reset');
   };
-  
-  
-const handleSubmit = async () => {
-  if (!privacyChecked) {
-    setHighlight(true);
-    showNotification('error', 'Please agree to the Privacy Policy');
-    setTimeout(() => setHighlight(false), 800);
-    return;
-  }
-  if (files.length === 0) {
-    showNotification('error', 'Please add at least one file');
-    return;
-  }
 
-  setStatus('uploading');
-  showNotification('info', 'Uploading files...');
 
-  try {
-    const apiBase = import.meta.env.VITE_API_URL;
-    const formData = new FormData();
-    files.forEach((f) => formData.append('file', f));
-    formData.append('country', country);
-    formData.append('stayDays', stayDays);
+  const handleSubmit = async () => {
+    if (!privacyChecked) {
+      setHighlight(true);
+      showNotification('error', 'Please agree to the Privacy Policy');
+      setTimeout(() => setHighlight(false), 800);
+      return;
+    }
+    if (files.length === 0) {
+      showNotification('error', 'Please add at least one file');
+      return;
+    }
 
-    const res = await fetch(`${apiBase}/statements/evaluate/pdf`, {
-      method: 'POST',
-      body: formData,
-    });
+    setStatus('uploading');
+    showNotification('info', 'Uploading files...');
 
-    const responseData = await res.json();
+    try {
+      const apiBase = import.meta.env.VITE_API_URL;
+      const formData = new FormData();
+      files.forEach((f) => formData.append('file', f));
+      formData.append('country', country);
+      formData.append('stayDays', stayDays);
 
-    // First check the response content regardless of status code
-    const errorPhrases = [
-      'Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır',
-      'Average daily expense is below the required minimum',
-      'Average daily expense for asked country is less than minimum'
-    ];
+      const res = await fetch(`${apiBase}/statements/evaluate/pdf`, {
+        method: 'POST',
+        body: formData,
+      });
 
-    const isInsufficientFunds = errorPhrases.some(phrase => 
-      responseData.message && responseData.message.includes(phrase)
-    );
+      const responseData = await res.json();
 
-    if (isInsufficientFunds) {
-      const numberPattern = /(\d+\.?\d*)/g;
-      const numbers = responseData.message.match(numberPattern);
-      
-      let requiredAmount = 'unknown';
-      let yourAmount = 'unknown';
-      
-      if (numbers && numbers.length >= 2) {
-        requiredAmount = numbers[0];
-        yourAmount = numbers[1];
-      }
-      
-      setStatus('error');
-      showNotification('error', 
-        `Average daily expense is below the required minimum. Required: ${requiredAmount} AZN, Yours: ${yourAmount} AZN`
+      // First check the response content regardless of status code
+      const errorPhrases = [
+        'Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır',
+        'Average daily expense is below the required minimum',
+        'Average daily expense for asked country is less than minimum'
+      ];
+
+      const isInsufficientFunds = errorPhrases.some(phrase =>
+        responseData.message && responseData.message.includes(phrase)
       );
-      return;
-    }
 
-    // Then check HTTP status code
-    if (!res.ok) {
+      if (isInsufficientFunds) {
+        const numberPattern = /(\d+\.?\d*)/g;
+        const numbers = responseData.message.match(numberPattern);
+
+        let requiredAmount = 'unknown';
+        let yourAmount = 'unknown';
+
+        if (numbers && numbers.length >= 2) {
+          requiredAmount = numbers[0];
+          yourAmount = numbers[1];
+        }
+
+        setStatus('error');
+        showNotification('error',
+          `Average daily expense is below the required minimum. Required: ${requiredAmount} AZN, Yours: ${yourAmount} AZN`
+        );
+        return;
+      }
+
+      // Then check HTTP status code
+      if (!res.ok) {
+        setStatus('error');
+        showNotification('error', responseData.message || 'Upload failed. Please try again.');
+        return;
+      }
+
+      // Only show success if everything is okay
+      setStatus('success');
+      showNotification('success', responseData.message || 'Upload successful!');
+      setFiles([]);
+    } catch (error) {
+      console.error('Upload error:', error);
       setStatus('error');
-      showNotification('error', responseData.message || 'Upload failed. Please try again.');
-      return;
+      showNotification('error', error.message || 'Upload failed. Please try again.');
     }
-
-    // Only show success if everything is okay
-    setStatus('success');
-    showNotification('success', responseData.message || 'Upload successful!');
-    setFiles([]);
-  } catch (error) {
-    console.error('Upload error:', error);
-    setStatus('error');
-    showNotification('error', error.message || 'Upload failed. Please try again.');
-  }
-};
+  };
 
   return (
     <div className="Upload-Group">
@@ -343,7 +343,6 @@ const handleSubmit = async () => {
             </button>
           )}
         </div>
-
         {notification && (
           <div className={`notification ${notification.type} ${notification ? 'show' : ''}`}>
             <div className="notification-icon">
@@ -360,7 +359,7 @@ const handleSubmit = async () => {
               onClick={() => setNotification(null)}
               title="Close notification"
             >
-              <FaTimes />
+              <p>OK</p>
             </button>
           </div>
         )}
