@@ -154,6 +154,8 @@ const Upload = ({ country, stayDays }) => {
         'Average daily expense for asked country is less than minimum',
         'Period is too big.. Maximum accepted period is : 185 days',
         'Minimum required days are not meet. Minimum: 28 days required',
+        'Minimum required days are not meet. Minimum: 30 days required',
+        'Minimum required days are not meet. Minimum: 31 days required',
         'Rules not found.'
       ];
 
