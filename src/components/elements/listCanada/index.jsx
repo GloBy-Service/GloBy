@@ -2,7 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Upload from '../upload';
 import './../../../common/style/country.css';
 
-const canada =   { name: 'Canada', backendName: 'Canada', code: 'ca' };
+//  { name: 'Canada', backendName: 'Canada', code: 'ca' };
+
+   const canada =   {
+      "country": "Canada",
+      "dailyCostEur": 282.20,
+      "minDays": 30,
+      "maxStatementAgeDays": 30
+    }
 
 
 const FlagListCanada = () => {

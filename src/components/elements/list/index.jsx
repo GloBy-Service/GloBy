@@ -286,28 +286,26 @@ const countries = [
       "minDays": 90,
       "maxStatementAgeDays": 90
     },
-    {
-      "country": "UK",
-      "dailyCostEur": 244.88,
-      "minDays": 28,
-      "maxStatementAgeDays": 28
-    },
-    {
-      "country": "USA",
-      "dailyCostEur": 282.20,
-      "minDays": 30,
-      "maxStatementAgeDays": 30
-    },
-    {
-      "country": "Canada",
-      "dailyCostEur": 282.20,
-      "minDays": 30,
-      "maxStatementAgeDays": 30
-    }
+    // {
+    //   "country": "UK",
+    //   "dailyCostEur": 244.88,
+    //   "minDays": 28,
+    //   "maxStatementAgeDays": 28
+    // },
+    // {
+    //   "country": "USA",
+    //   "dailyCostEur": 282.20,
+    //   "minDays": 30,
+    //   "maxStatementAgeDays": 30
+    // },
+    // {
+    //   "country": "Canada",
+    //   "dailyCostEur": 282.20,
+    //   "minDays": 30,
+    //   "maxStatementAgeDays": 30
+    // }
   ]
-  // { name: 'USA', backendName: 'USA', code: 'us' },
-  // { name: 'Canada', backendName: 'Canada', code: 'ca' },
-  // { name: 'UK', backendName: 'UK', code: 'gb' },
+
 ];
 
 const FlagList = () => {
