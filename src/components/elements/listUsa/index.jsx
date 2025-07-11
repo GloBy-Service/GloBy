@@ -2,12 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Upload from '../upload';
 import './../../../common/style/country.css';
 
-const usa =     {
-      "country": "USA",
-      "dailyCostEur": 282.20,
-      "minDays": 30,
-      "maxStatementAgeDays": 30
-    }
+const usa = { name: 'USA', backendName: 'USA', code: 'us' };
 
 const FlagListUsa = () => {
   const [selected, setSelected] = useState(null);

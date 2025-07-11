@@ -225,87 +225,20 @@ import Upload from '../upload';
 import './../../../common/style/country.css';
 
 const countries = [
-  [
-    {
-      "country": "Germany",
-      "dailyCostEur": 214.46,
-      "minDays": 90,
-      "maxStatementAgeDays": 90
-    },
-    {
-      "country": "France",
-      "dailyCostEur": 233.95,
-      "minDays": 90,
-      "maxStatementAgeDays": 90
-    },
-    {
-      "country": "Hungary",
-      "dailyCostEur": 136.47,
-      "minDays": 90,
-      "maxStatementAgeDays": 90
-    },
-    {
-      "country": "Poland",
-      "dailyCostEur": 146.22,
-      "minDays": 90,
-      "maxStatementAgeDays": 90
-    },
-    {
-      "country": "Czechia",
-      "dailyCostEur": 40.00,
-      "minDays": 90,
-      "maxStatementAgeDays": 90
-    },
-    {
-      "country": "Italy",
-      "dailyCostEur": 165.72,
-      "minDays": 90,
-      "maxStatementAgeDays": 90
-    },
-    {
-      "country": "Spain",
-      "dailyCostEur": 175.46,
-      "minDays": 90,
-      "maxStatementAgeDays": 90
-    },
-    {
-      "country": "Portugal",
-      "dailyCostEur": 185.21,
-      "minDays": 90,
-      "maxStatementAgeDays": 90
-    },
-    {
-      "country": "Austria",
-      "dailyCostEur": 194.96,
-      "minDays": 90,
-      "maxStatementAgeDays": 90
-    },
-    {
-      "country": "Belgium",
-      "dailyCostEur": 204.71,
-      "minDays": 90,
-      "maxStatementAgeDays": 90
-    },
-    // {
-    //   "country": "UK",
-    //   "dailyCostEur": 244.88,
-    //   "minDays": 28,
-    //   "maxStatementAgeDays": 28
-    // },
-    // {
-    //   "country": "USA",
-    //   "dailyCostEur": 282.20,
-    //   "minDays": 30,
-    //   "maxStatementAgeDays": 30
-    // },
-    // {
-    //   "country": "Canada",
-    //   "dailyCostEur": 282.20,
-    //   "minDays": 30,
-    //   "maxStatementAgeDays": 30
-    // }
-  ]
+  { name: 'Austria', backendName: 'Austria', code: 'at' },
+  { name: 'Belgium', backendName: 'Belgium', code: 'be' },
+  { name: 'Czechia', backendName: 'Czechia', code: 'cz' },
+  { name: 'France', backendName: 'France', code: 'fr' },
+  { name: 'Germany', backendName: 'Germany', code: 'de' },
+  { name: 'Hungary', backendName: 'Hungary', code: 'hu' },
+  { name: 'Italy', backendName: 'Italy', code: 'it' },
+  { name: 'Netherlands', backendName: 'Netherlands', code: 'nl' },
+  { name: 'Norway', backendName: 'Norway', code: 'no' },
+  { name: 'Poland', backendName: 'Poland', code: 'pl' },
 
+  // { name: 'USA', backendName: 'USA', code: 'us' },
+  // { name: 'Canada', backendName: 'Canada', code: 'ca' },
+  // { name: 'UK', backendName: 'UK', code: 'gb' },
 ];
 
 const FlagList = () => {
