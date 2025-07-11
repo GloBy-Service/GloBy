@@ -151,9 +151,7 @@ const Upload = ({ country, stayDays }) => {
       const errorPhrases = [
         'Ortalama gündəlik kredit ölkə üçün tələb olunan minimumdan azdır',
         'Average daily expense is below the required minimum',
-        'Average daily expense for asked country is less than minimum',
-        'Period is too big.. Maximum accepted period is : 185 days',
-        'Minimum required days are not meet. Minimum: 28 days required'
+        'Average daily expense for asked country is less than minimum'
       ];
 
       const isInsufficientFunds = errorPhrases.some(phrase =>
