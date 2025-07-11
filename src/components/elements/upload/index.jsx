@@ -156,6 +156,9 @@ const Upload = ({ country, stayDays }) => {
         'Minimum required days are not meet. Minimum: 28 days required',
         'Minimum required days are not meet. Minimum: 30 days required',
         'Minimum required days are not meet. Minimum: 31 days required',
+        'Minimum required days are not meet. Minimum: 90 days required',
+        'Minimum required days are not meet. Minimum: 180 days required',
+        'Minimum required days are not meet. Minimum: 360 days required',
         'Rules not found.'
       ];
 
