@@ -225,16 +225,86 @@ import Upload from '../upload';
 import './../../../common/style/country.css';
 
 const countries = [
-  { name: 'Austria', backendName: 'Avstriya', code: 'at' },
-  { name: 'Belgium', backendName: 'Belçika', code: 'be' },
-  { name: 'Czechia', backendName: 'Çexiya', code: 'cz' },
-  { name: 'France', backendName: 'Fransa', code: 'fr' },
-  { name: 'Germany', backendName: 'Almaniya', code: 'de' },
-  { name: 'Hungary', backendName: 'Macarıstan', code: 'hu' },
-  { name: 'Italy', backendName: 'İtaliya', code: 'it' },
-  { name: 'Netherlands', backendName: 'Niderland', code: 'nl' },
-  { name: 'Norway', backendName: 'Norveç', code: 'no' },
-  { name: 'Poland', backendName: 'Polşa', code: 'pl' },
+  [
+    {
+      "country": "Germany",
+      "dailyCostEur": 214.46,
+      "minDays": 90,
+      "maxStatementAgeDays": 90
+    },
+    {
+      "country": "France",
+      "dailyCostEur": 233.95,
+      "minDays": 90,
+      "maxStatementAgeDays": 90
+    },
+    {
+      "country": "Hungary",
+      "dailyCostEur": 136.47,
+      "minDays": 90,
+      "maxStatementAgeDays": 90
+    },
+    {
+      "country": "Poland",
+      "dailyCostEur": 146.22,
+      "minDays": 90,
+      "maxStatementAgeDays": 90
+    },
+    {
+      "country": "Czechia",
+      "dailyCostEur": 40.00,
+      "minDays": 90,
+      "maxStatementAgeDays": 90
+    },
+    {
+      "country": "Italy",
+      "dailyCostEur": 165.72,
+      "minDays": 90,
+      "maxStatementAgeDays": 90
+    },
+    {
+      "country": "Spain",
+      "dailyCostEur": 175.46,
+      "minDays": 90,
+      "maxStatementAgeDays": 90
+    },
+    {
+      "country": "Portugal",
+      "dailyCostEur": 185.21,
+      "minDays": 90,
+      "maxStatementAgeDays": 90
+    },
+    {
+      "country": "Austria",
+      "dailyCostEur": 194.96,
+      "minDays": 90,
+      "maxStatementAgeDays": 90
+    },
+    {
+      "country": "Belgium",
+      "dailyCostEur": 204.71,
+      "minDays": 90,
+      "maxStatementAgeDays": 90
+    },
+    {
+      "country": "UK",
+      "dailyCostEur": 244.88,
+      "minDays": 28,
+      "maxStatementAgeDays": 28
+    },
+    {
+      "country": "USA",
+      "dailyCostEur": 282.20,
+      "minDays": 30,
+      "maxStatementAgeDays": 30
+    },
+    {
+      "country": "Canada",
+      "dailyCostEur": 282.20,
+      "minDays": 30,
+      "maxStatementAgeDays": 30
+    }
+  ]
   // { name: 'USA', backendName: 'USA', code: 'us' },
   // { name: 'Canada', backendName: 'Canada', code: 'ca' },
   // { name: 'UK', backendName: 'UK', code: 'gb' },
