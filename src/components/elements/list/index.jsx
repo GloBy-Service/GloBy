@@ -232,7 +232,7 @@ const countries = [
   { name: 'Germany', backendName: 'Germany', code: 'de' },
   { name: 'Hungary', backendName: 'Hungary', code: 'hu' },
   { name: 'Italy', backendName: 'Italy', code: 'it' },
-  { name: 'Netherlands', backendName: 'Netherlands', code: 'nl' },
+  { name: 'Spain', backendName: 'Spain', code: 'es' },
   { name: 'Norway', backendName: 'Norway', code: 'no' },
   { name: 'Poland', backendName: 'Poland', code: 'pl' },
 
